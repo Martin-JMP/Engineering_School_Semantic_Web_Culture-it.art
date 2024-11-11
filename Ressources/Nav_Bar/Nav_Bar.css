@@ -1,0 +1,92 @@
+/* Reset and body styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    width: 100%;
+}
+
+.page-wrap {
+    flex: 1; /* Allows content area to expand and push footer down when needed */
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: white;
+    color: black;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar .center-nav {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    position: relative;
+    z-index: 5;
+}
+
+.navbar a {
+    color: black;
+    text-decoration: none;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    text-decoration: underline;
+}
+
+.navbar .right-nav {
+    position: absolute;
+    right: 0px;
+    z-index: 10;
+    top: 15px;
+}
+
+/* Media query for screens less than 450px wide */
+@media (max-width: 450px) {
+    .navbar a {
+        padding: 0 7px;
+    }
+
+    .navbar .center-nav {
+        justify-content: flex-start;
+    }
+}
+
+/* Footer styles */
+.site-footer {
+    background: linear-gradient(to right, rgba(102, 153, 153, 0.781), rgba(51, 102, 102, 0.829), rgb(102, 153, 153)), #e0e0e0;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-buttons a {
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+}
