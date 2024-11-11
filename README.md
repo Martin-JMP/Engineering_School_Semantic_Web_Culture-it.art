@@ -1,1 +1,49 @@
 # Culture-it.art
+
+Use this reference code for each page you make :
+
+````
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Web site created by Culture-It" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <title>Culture-It</title>
+    <link href="../Nav_Bar/Nav_bar.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="center-nav">
+            <a href="../../" class="nav-link" data-name="Text1">Text1</a>
+            <a href="../../" class="nav-link" data-name="Text2">Text2</a>
+            <a href="../../" class="nav-link" data-name="Text3">Text3</a>
+            <a href="../../" class="nav-link" data-name="Text4">Text4</a>
+        </div>
+        <div class="right-nav" id="user-section">
+            <a href="../User/Login/Login.html" class="nav-link" data-name="login">Login</a>
+        </div>
+    </div>
+
+    <div class = "page-wrap" style="font-size: 40px;">
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-buttons">
+            <a href="../../">Text1</a>
+            <a href="../../">Text2</a>
+            <a href="../../">Text3</a>
+            <a href="../../">Text4</a>
+        </div>
+    </footer>
+
+
+    <script defer="defer" src="../Nav_Bar/Nav_Bar.js"></script>
+</body>
+
+</html>
+````
