@@ -1,6 +1,7 @@
 # Culture-it.art
 
 Use this reference code for each page you make :
+Just don't forget to update the link between each page, css and js.
 
 ````
 <!doctype html>
