@@ -267,6 +267,7 @@ html, body {
 }
 
 .footer-buttons a {
+    font-weight: bold;
     z-index: 10;
     color: rgb(0, 0, 0);
     padding: 10px 20px;
