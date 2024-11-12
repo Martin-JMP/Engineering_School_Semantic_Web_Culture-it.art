@@ -27,7 +27,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $password = $_POST['password'];
 
     // Préparer la requête pour vérifier si l'email existe et récupérer les informations associées
-    $stmt = $conn->prepare("SELECT id, first_name, email, password_hash FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, pseudonyme, email, password_hash FROM users WHERE email = ?");
     if ($stmt === false) {
         echo json_encode(['error' => 'Failed to prepare statement']);
         exit;
@@ -46,10 +46,10 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
         if (password_verify($password, $hashed_password)) {
             // Mot de passe correct, démarrer la session
             $_SESSION['user_id'] = $row['id'];
-            $_SESSION['first_name'] = $row['first_name'];
+            $_SESSION['pseudonyme'] = $row['pseudonyme'];
             $_SESSION['email'] = $row['email'];
 
-            echo json_encode(['success' => true, 'first_name' => $row['first_name']]);
+            echo json_encode(['success' => true, 'pseudonyme' => $row['pseudonyme']]);
         } else {
             echo json_encode(['success' => false, 'error' => 'Invalid password']);
         }
