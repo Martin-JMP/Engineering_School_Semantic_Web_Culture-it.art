@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Web site created by Culture-It" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <title>Culture-It</title>
+    <link href="./Design/Signup.css" rel="stylesheet">
+    <link href="../../Ressources/Nav_Bar/Nav_Bar.css" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar">
+        <div class="center-nav">
+            <a href="../../" class="nav-link" data-name="Text1">Text1</a>
+            <a href="../../" class="nav-link" data-name="Text2">Text2</a>
+            <a href="../../" class="nav-link" data-name="Text3">Text3</a>
+            <a href="../../" class="nav-link" data-name="Text4">Text4</a>
+        </div>
+        <div class="right-nav" id="user-section">
+            <a href="../User/Login/Login.html" class="nav-link" data-name="login">Login</a>
+        </div>
+    </div>
+    
+    <div class = "page-wrap">
+        <div class="main_container">
+            <div class="signup-container">
+                <h2>Sign Up</h2>
+                <input type="text" placeholder="Pseudonyme" required>
+                <input type="email" placeholder="Email" required>
+                <label for="bday" style="color: rgb(114 114 114);">Date of birth</label>
+                <input type="date" placeholder="Date of birth" id="bday" style=" 
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                color: rgb(114 114 114);" required>
+                <input type="password" placeholder="Password" required>
+                <input type="password" placeholder="Confirmation Password" style="margin-bottom: 20px;" required>
+                <input type="checkbox" id="CGUBox" name="CGUBox" />
+                <label for="CGUBox">I declare that I accept the CGU</label>
+                <button class="submit-button" style="margin-top: 10px;">Validate</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-buttons">
+            <a href="../../">Text1</a>
+            <a href="../../">Text2</a>
+            <a href="../../">Text3</a>
+            <a href="../../">Text4</a>
+        </div>
+
+        <!-- For the design -->
+        <div class="bubble1"></div>
+        <div class="bubble2"></div>
+        <div class="bubble3"></div>
+        <div class="bubble4"></div>
+        <div class="bubble5"></div>
+        <div class="bubble6"></div>
+        <div class="bubble7"></div>
+        <div class="bubble8"></div>
+        <div class="bubble9"></div>
+        <div class="bubble10"></div>
+        <div class="bubble11"></div>
+        <div class="bubble12"></div>
+        <div class="bubble13"></div>
+        <div class="bubble14"></div>
+        <div class="bubble15"></div>
+        <div class="bubble16"></div>
+        <div class="bubble17"></div>
+        <div class="bubble18"></div>
+        <div class="bubble19"></div>
+        <div class="bubble20"></div>
+        <div class="bubble21"></div>
+    </footer>
+
+    <script>
+        // Fonction pour définir les limites de la date de naissance (min 100 ans, max 13 ans)
+        function setBirthDateLimits() {
+            const today = new Date();
+    
+            // Calculer la date il y a 13 ans
+            const maxDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate());
+            document.getElementById('bday').max = maxDate.toISOString().split('T')[0];
+    
+            // Calculer la date il y a 100 ans
+            const minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+            document.getElementById('bday').min = minDate.toISOString().split('T')[0];
+        }
+    
+        // Appeler la fonction au chargement de la page
+        window.onload = setBirthDateLimits;
+    </script>
+
+    <script defer="defer" src="../../Ressources/Nav_Bar/Nav_Bar.js"></script>
+    <script defer="defer" src="Signup.js"></script>
+</body>
+</html>

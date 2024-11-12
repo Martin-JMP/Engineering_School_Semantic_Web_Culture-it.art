@@ -1,15 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="Web site created by Culture-It" />
     <link rel="apple-touch-icon" href="/logo192.png" />
     <title>Culture-It</title>
-    <link href="./Ressources/Nav_Bar/Nav_Bar.css" rel="stylesheet">
+    <link href="./Design/Login.css" rel="stylesheet">
+    <link href="../../Ressources/Nav_Bar/Nav_Bar.css" rel="stylesheet">
 </head>
-
 <body>
     <div class="navbar">
         <div class="center-nav">
@@ -18,13 +17,26 @@
             <a href="../../" class="nav-link" data-name="Text3">Text3</a>
             <a href="../../" class="nav-link" data-name="Text4">Text4</a>
         </div>
-        <div class="right-nav" id="user-section">
-            <a href="../User/Login/Login.html" class="nav-link" data-name="login">Login</a>
+        <div class="right-nav">
+            <a href="Login.html" class="nav-link" data-name="login">Login</a>
         </div>
     </div>
 
     <div class = "page-wrap">
-
+        <div class="main_container">
+            <div class="login-container">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <input style="    width: 100%;
+                    padding: 10px;
+                    margin: 10px 0 20px 0;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;" type="password" class="password-input" id="password-input" placeholder="Enter your password" required>
+                    <button type="submit" class="submit-button">Validate</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <footer class="site-footer">
@@ -59,8 +71,7 @@
         <div class="bubble21"></div>
     </footer>
 
-
-    <script defer="defer" src="./Ressources/Nav_Bar/Nav_Bar.js"></script>
+    <script defer="defer" src="../../Ressources/Nav_Bar/Nav_Bar.js"></script>
+    <script defer="defer" src="L0gin.js"></script>
 </body>
-
 </html>
