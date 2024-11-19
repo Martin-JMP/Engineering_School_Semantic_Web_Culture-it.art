@@ -32,6 +32,12 @@
     width: 40%;
 }
 
+#artwork-image {
+
+    width: 40%;
+
+}
+
 .main-artist{
     display: flex;
     flex-direction: row;
@@ -47,6 +53,12 @@
     align-items: center;
     position: relative;
     width: 100%;
+}
+
+.discussion-title {
+
+    margin-bottom: 10px;
+
 }
 
 .ligne{
@@ -144,6 +156,7 @@
     box-shadow: black;
     border: 1px solid #00000080;
     transition: 0.5s ease;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -189,6 +202,17 @@
 }
 
 .comment-user{
-    color: #1ea519;
+    color: grey;
 }
   
+
+
+#no-comments {
+
+    margin-bottom: 10px;
+
+    display: flex;
+
+    justify-content: center;
+
+}
