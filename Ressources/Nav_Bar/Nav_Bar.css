@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'Ori';
+    src: url('../Nav_Bar/Typo/Origami-Regular-3.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'TYPO';
+    src: url('../Nav_Bar/Typo/mytupi.ttf') format('truetype');
+    font-style: normal;
+  }
+
 /* Reset and body styles */
 * {
     margin: 0;
@@ -21,6 +33,7 @@ html, body {
 
 /* Navbar styles */
 .navbar {
+    font-family: 'Ori';
     background-color: white;
     color: black;
     padding: 15px;
@@ -73,7 +86,7 @@ html, body {
     overflow: hidden;
     padding: 15px 0;
     text-align: center;
-    background: #ffffff; /* Base background color */
+    background: #ffffff;
 }
 
 /* Animated bubble effect - common style */
