@@ -140,6 +140,8 @@
     justify-content: center;
     gap: 10px; /* Ajoute un espace entre l'input et le bouton */
     align-items: center;
+    margin-bottom: 40px;
+    margin-top: 20px;
 }
 
 /* Bouton */
@@ -186,7 +188,7 @@
     height: 70px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     margin-bottom: 10px;
     padding: 5px;
 }
@@ -208,11 +210,28 @@
 
 
 #no-comments {
-
     margin-bottom: 10px;
-
     display: flex;
-
     justify-content: center;
+}
 
+.interest-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    flex-direction: row;
+    top: -20px;
+    position: relative;
+    justify-content: flex-end;
+}
+
+.interest-count {
+    margin: 0 10px;
+}
+
+.interest-container button {
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
 }

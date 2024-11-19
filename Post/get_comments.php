@@ -1,4 +1,3 @@
-
 <?php
 ini_set('display_errors', 0);  // Désactiver l'affichage des erreurs
 error_reporting(E_ALL);  // Enregistrer toutes les erreurs
@@ -22,7 +21,7 @@ if ($conn->connect_error) {
 
 $objectId = $_GET['objectId'];
 
-$commentQuery = $conn->prepare("SELECT pseudonyme, comment, created_at FROM Comments WHERE object_id = ?");
+$commentQuery = $conn->prepare("SELECT id, pseudonyme, comment, created_at, interest FROM Comments WHERE object_id = ?");
 $commentQuery->bind_param("i", $objectId);
 $commentQuery->execute();
 $commentResult = $commentQuery->get_result();

@@ -126,6 +126,9 @@ async function fetchComments(objectId) {
                 commentsContainer.appendChild(noCommentsMessage);
             }
         } else {
+            // Trier les commentaires par nombre d'intérêts (du plus grand au plus petit)
+            comments.sort((a, b) => b.interest - a.interest);
+
             comments.forEach(comment => {
                 const commentWrapper = document.createElement("div");
                 commentWrapper.className = "zone-comment";
@@ -145,6 +148,71 @@ async function fetchComments(objectId) {
                 commentDateElement.textContent = new Date(comment.created_at).toLocaleDateString();
                 commentWrapper.appendChild(commentDateElement);
 
+                // Conteneur pour les boutons et le nombre d'intérêts
+                const interestContainer = document.createElement("div");
+                interestContainer.className = "interest-container";
+
+                // Bouton pour ajouter un point d'intérêt
+                const addInterestButton = document.createElement("button");
+                addInterestButton.textContent = "+";
+                addInterestButton.addEventListener("click", async () => {
+                    try {
+                        const response = await fetch('update_interest.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: new URLSearchParams({
+                                commentId: comment.id,
+                                action: 'add'
+                            })
+                        });
+                        if (response.ok) {
+                            fetchComments(objectId);
+                        } else {
+                            console.error("Erreur lors de la mise à jour de l'intérêt:", response.statusText);
+                        }
+                    } catch (error) {
+                        console.error("Erreur lors de la mise à jour de l'intérêt:", error);
+                    }
+                });
+                interestContainer.appendChild(addInterestButton);
+
+                // Affichage du nombre d'intérêts
+                const interestCount = document.createElement("span");
+                interestCount.className = "interest-count";
+                interestCount.textContent = comment.interest;
+                interestContainer.appendChild(interestCount);
+
+                // Bouton pour supprimer un point d'intérêt
+                const removeInterestButton = document.createElement("button");
+                removeInterestButton.textContent = "-";
+                removeInterestButton.addEventListener("click", async () => {
+                    if (comment.interest > 0) {
+                        try {
+                            const response = await fetch('update_interest.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: new URLSearchParams({
+                                    commentId: comment.id,
+                                    action: 'remove'
+                                })
+                            });
+                            if (response.ok) {
+                                fetchComments(objectId);
+                            } else {
+                                console.error("Erreur lors de la mise à jour de l'intérêt:", response.statusText);
+                            }
+                        } catch (error) {
+                            console.error("Erreur lors de la mise à jour de l'intérêt:", error);
+                        }
+                    }
+                });
+                interestContainer.appendChild(removeInterestButton);
+
+                commentWrapper.appendChild(interestContainer);
                 commentsContainer.appendChild(commentWrapper);
             });
         }
