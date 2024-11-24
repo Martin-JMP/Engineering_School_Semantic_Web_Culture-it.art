@@ -33,7 +33,7 @@ if (!$userName || !$commentText || !$commentDate || !$objectId) {
     exit;
 }
 
-$artQuery = $conn->prepare("SELECT id FROM Art WHERE object_id = ?");
+$artQuery = $conn->prepare("SELECT id FROM artworks WHERE object_id = ?");
 if (!$artQuery) {
     error_log("Failed to prepare artQuery: " . $conn->error);
     echo json_encode(['error' => "Failed to prepare artQuery: " . $conn->error]);

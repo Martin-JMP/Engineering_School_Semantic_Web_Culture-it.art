@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const ObjectId = 37; // ID de "La Joconde". Remplacez-le pour une autre œuvre.
+    const ObjectId = 203; // ID de "La Joconde". Remplacez-le pour une autre œuvre.
 
     // Vérifier si l'URL contient déjà le paramètre
     const urlParams = new URLSearchParams(window.location.search);
