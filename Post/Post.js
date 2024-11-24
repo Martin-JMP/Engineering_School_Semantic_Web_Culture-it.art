@@ -84,20 +84,49 @@ async function fetchArtworkData(id) {
         const data = await response.json();
         
         // Remplissage des informations sur l'artiste
-        document.getElementById("artist-name").textContent = data.artistDisplayName || "Unknown Artist";
-        document.getElementById("artist-birth-death").textContent = `${data.artistBeginDate} - ${data.artistEndDate}`;
-        document.getElementById("artist-nationality").textContent = data.artistNationality;
-        
+        const artistNameElement = document.getElementById("artist-name");
+        if (artistNameElement) artistNameElement.textContent = data.artistDisplayName || "Unknown Artist";
+
+        const artistNationalityElement = document.getElementById("artist-nationality");
+        if (artistNationalityElement) artistNationalityElement.textContent = data.artistNationality || "Unknown Nationality";
+
+        const artistBirthDeathElement = document.getElementById("artist-birth-death");
+        if (artistBirthDeathElement) artistBirthDeathElement.textContent = `${data.artistBeginDate} - ${data.artistEndDate}`;
+
         // Image principale de l'œuvre
         const artworkImage = document.getElementById("artwork-image");
-        artworkImage.src = data.primaryImage || data.primaryImageSmall;
-        artworkImage.alt = data.title || "Image de l'oeuvre";
+        if (artworkImage) {
+            artworkImage.src = data.primaryImage || data.primaryImageSmall;
+            artworkImage.alt = data.title || "Picture of the artwork";
+        }
 
         // Remplissage des informations sur l'œuvre
-        document.getElementById("artwork-title").textContent = data.title || "Unkown Title";
-        document.getElementById("artwork-dimensions").textContent = data.dimensions;
-        document.getElementById("artwork-style").textContent = data.objectName;
-        document.getElementById("artwork-museum-location").textContent = data.repository;
+        const artworkTitleElement = document.getElementById("artwork-title");
+        if (artworkTitleElement) artworkTitleElement.textContent = data.title || "Unknown Title";
+
+        const artworkEndDateElement = document.getElementById("artwork-end-date");
+        if (artworkEndDateElement) artworkEndDateElement.textContent += data.objectEndDate || "Unknown End Date";
+
+        const artworkCountryElement = document.getElementById("artwork-country");
+        if (artworkCountryElement) artworkCountryElement.textContent += data.country || "Unknown Country";
+
+        const artworkStyleElement = document.getElementById("artwork-style");
+        if (artworkStyleElement) artworkStyleElement.textContent += data.objectName;
+
+        const artworkCultureElement = document.getElementById("artwork-culture");
+        if (artworkCultureElement) artworkCultureElement.textContent += data.culture || "Unknown Culture";
+
+        const artworkMediumElement = document.getElementById("artwork-medium");
+        if (artworkMediumElement) artworkMediumElement.textContent += data.medium || "Unknown Medium";
+
+        const artworkDimensionsElement = document.getElementById("artwork-dimensions");
+        if (artworkDimensionsElement) artworkDimensionsElement.textContent += data.dimensions || "Unknown Dimensions";
+
+        const artworkDepartmentElement = document.getElementById("artwork-department");
+        if (artworkDepartmentElement) artworkDepartmentElement.textContent += data.department || "Unknown Department";
+
+        const artworkMuseumLocationElement = document.getElementById("artwork-museum-location");
+        if (artworkMuseumLocationElement) artworkMuseumLocationElement.textContent += data.repository;
     } catch (error) {
         console.error("Erreur:", error);
     }

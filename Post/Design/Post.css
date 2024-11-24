@@ -6,7 +6,7 @@
     left: 13%;
 }
 
-#artiste-name{
+#artist-name{
     padding-bottom: 20px;
 }
 
@@ -45,7 +45,16 @@
     margin-bottom: 40px;
 }
 
-
+#artwork-end-date,
+#artwork-country,
+#artwork-style,
+#artwork-culture,
+#artwork-medium,
+#artwork-dimensions,
+#artwork-department,
+#artwork-museum-location {
+    margin-bottom: 5px;
+}
 
 .discussion-section{
     display: flex;
