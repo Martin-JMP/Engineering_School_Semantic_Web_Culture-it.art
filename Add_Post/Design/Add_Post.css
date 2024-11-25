@@ -1,0 +1,18 @@
+
+.deposit-box {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin: 50px auto;
+    width: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.deposit-box.dragover {
+    background-color: rgba(128, 0, 128, 0.5); /* Purple with 0.5 opacity */
+}
+
+body.dragging {
+    background-color: rgba(128, 0, 128, 0.5); /* Purple with 0.5 opacity */
+}

@@ -113,6 +113,24 @@ button:hover {
     margin-top: 10px;
 }
 
+#add_artwork_section {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#add_artwork_btn {
+    color: white;
+    cursor: pointer;
+    background: black;
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* Media query pour les écrans inférieurs à 450px */
 @media (max-width: 450px) {
