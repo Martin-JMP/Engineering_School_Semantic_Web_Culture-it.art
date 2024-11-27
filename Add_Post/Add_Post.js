@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const depositBox = document.getElementById('deposit-box');
     const fileInput = document.getElementById('file-input');
+    const fileNameLabel = document.getElementById('file-name-label');
+    const removeFileButton = document.getElementById('remove-file-button');
 
     depositBox.addEventListener('click', function() {
         fileInput.click();
@@ -9,7 +11,37 @@ document.addEventListener("DOMContentLoaded", function() {
     fileInput.addEventListener('change', function() {
         const files = fileInput.files;
         if (files.length > 0) {
+            fileNameLabel.textContent = `Uploaded File: ${files[0].name}`;
+            removeFileButton.classList.remove('hidden-button');
             saveFiles(files);
+        } else {
+            fileNameLabel.textContent = 'Uploaded File:';
+            removeFileButton.classList.add('hidden-button');
+        }
+    });
+
+    removeFileButton.addEventListener('click', function() {
+        const fileName = fileNameLabel.textContent.replace('Uploaded File: ', '');
+        if (fileName) {
+            fetch('delete_file.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ fileName: fileName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    fileInput.value = '';
+                    fileNameLabel.textContent = 'Uploaded File:';
+                    removeFileButton.classList.add('hidden-button');
+                    console.log('File removed successfully');
+                } else {
+                    console.error('Error removing file:', data.error);
+                }
+            })
+            .catch(error => console.error('Error removing file:', error));
         }
     });
 
@@ -31,7 +63,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const files = event.dataTransfer.files;
         if (files.length > 0) {
+            fileNameLabel.textContent = `Uploaded File: ${files[0].name}`;
+            removeFileButton.classList.remove('hidden-button');
             saveFiles(files);
+        } else {
+            fileNameLabel.textContent = 'Uploaded File:';
+            removeFileButton.classList.add('hidden-button');
         }
     });
 

@@ -24,11 +24,13 @@
         </div>
     </div>
 
-    <div class="page-wrap" id="page-content" style="display: none;">
+    <div class="page-wrap" id="page-content">
         <div id="deposit-box" class="deposit-box">
             <p>Drag & Drop your file here or click to upload</p>
-            <input type="file" id="file-input" multiple style="display: none;">
+            <label for="file-input" id="file-name-label">Uploaded File:</label>
+            <input type="file" id="file-input" multiple class="hidden-input" title="Choose a file to upload">
         </div>
+        <button id="remove-file-button" class="hidden-button" type="button">Remove File</button>
     </div>
 
     <footer class="site-footer">
