@@ -1,42 +1,38 @@
 document.addEventListener("DOMContentLoaded", function() {
     const depositBox = document.getElementById('deposit-box');
+    const fileInput = document.getElementById('file-input');
 
-    depositBox.addEventListener('dragover', function(event) {
-        event.preventDefault();
-        depositBox.classList.add('dragover');
-        document.body.classList.add('dragging');
+    depositBox.addEventListener('click', function() {
+        fileInput.click();
     });
 
-    depositBox.addEventListener('dragleave', function() {
-        depositBox.classList.remove('dragover');
-        document.body.classList.remove('dragging');
-    });
-
-    depositBox.addEventListener('drop', function(event) {
-        event.preventDefault();
-        depositBox.classList.remove('dragover');
-        document.body.classList.remove('dragging');
-
-        const files = event.dataTransfer.files;
+    fileInput.addEventListener('change', function() {
+        const files = fileInput.files;
         if (files.length > 0) {
-            // Handle the dropped files
-            console.log('File(s) dropped', files);
             saveFiles(files);
         }
     });
 
     document.addEventListener('dragover', function(event) {
         event.preventDefault();
+        depositBox.classList.add('dragover');
         document.body.classList.add('dragging');
     });
 
     document.addEventListener('dragleave', function() {
+        depositBox.classList.remove('dragover');
         document.body.classList.remove('dragging');
     });
 
     document.addEventListener('drop', function(event) {
         event.preventDefault();
+        depositBox.classList.remove('dragover');
         document.body.classList.remove('dragging');
+
+        const files = event.dataTransfer.files;
+        if (files.length > 0) {
+            saveFiles(files);
+        }
     });
 
     function saveFiles(files) {

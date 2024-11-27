@@ -20,13 +20,14 @@
             <a href="../../" class="nav-link" data-name="Text4">Text4</a>
         </div>
         <div class="right-nav" id="user-section">
-            <a class="nav-link" data-name="login">Login</a>
+            <a href="../User/Login/Login.html" class="nav-link" data-name="login">Login</a>
         </div>
     </div>
 
-    <div class="page-wrap">
+    <div class="page-wrap" id="page-content" style="display: none;">
         <div id="deposit-box" class="deposit-box">
-            <p>Drag & Drop your file here</p>
+            <p>Drag & Drop your file here or click to upload</p>
+            <input type="file" id="file-input" multiple style="display: none;">
         </div>
     </div>
 
@@ -64,5 +65,23 @@
 
     <script defer="defer" src="../Ressources/Nav_Bar/Nav_Bar.js"></script>
     <script defer="defer" src="Add_Post.js"></script>
+    <script defer="defer" src="../user_session.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('check_artist_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.logged_in && data.is_artist) {
+                        document.getElementById('page-content').style.display = 'block';
+                    } else {
+                        window.location.href = '../User/Login/Login.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking session:', error);
+                    window.location.href = '../User/Login/Login.html';
+                });
+        });
+    </script>
 </body>
 </html>
