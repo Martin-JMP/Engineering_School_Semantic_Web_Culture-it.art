@@ -11,9 +11,14 @@ document.addEventListener("DOMContentLoaded", function() {
     fileInput.addEventListener('change', function() {
         const files = fileInput.files;
         if (files.length > 0) {
-            fileNameLabel.textContent = `Uploaded File: ${files[0].name}`;
-            removeFileButton.classList.remove('hidden-button');
-            saveFiles(files);
+            if (isImageFile(files[0])) {
+                fileNameLabel.textContent = `Uploaded File: ${files[0].name}`;
+                removeFileButton.classList.remove('hidden-button');
+                saveFiles(files);
+            } else {
+                alert('Only image files (png, jpeg, jpg) are allowed.');
+                fileInput.value = '';
+            }
         } else {
             fileNameLabel.textContent = 'Uploaded File:';
             removeFileButton.classList.add('hidden-button');
@@ -63,14 +68,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const files = event.dataTransfer.files;
         if (files.length > 0) {
-            fileNameLabel.textContent = `Uploaded File: ${files[0].name}`;
-            removeFileButton.classList.remove('hidden-button');
-            saveFiles(files);
+            if (isImageFile(files[0])) {
+                fileNameLabel.textContent = `Uploaded File: ${files[0].name}`;
+                removeFileButton.classList.remove('hidden-button');
+                saveFiles(files);
+            } else {
+                alert('Only image files (png, jpeg, jpg) are allowed.');
+            }
         } else {
             fileNameLabel.textContent = 'Uploaded File:';
             removeFileButton.classList.add('hidden-button');
         }
     });
+
+    function isImageFile(file) {
+        const acceptedImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+        return acceptedImageTypes.includes(file.type);
+    }
 
     function saveFiles(files) {
         const formData = new FormData();
