@@ -1,0 +1,428 @@
+:root {
+    --primary-color: #2d4059;
+    --secondary-color: #ea5455;
+    --accent-color: #decdc3;
+    --bg-color: #f6f6f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background-color: var(--bg-color);
+}
+
+
+/* Main Content */
+.page-wrap {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Search Section */
+.search-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.search-button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-tag {
+    background-color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* Heritage Grid */
+.heritage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.heritage-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.heritage-card:hover {
+    transform: translateY(-5px);
+}
+
+.heritage-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.heritage-info {
+    padding: 1rem;
+}
+
+.heritage-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.heritage-description {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.metadata-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.metadata-tag {
+    background-color: #f0f0f0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .center-nav {
+        display: none;
+    }
+    
+    .heritage-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-bar {
+        flex-direction: column;
+    }
+    
+    .filters {
+        justify-content: center;
+    }
+}
+
+
+/* Conteneur pour aligner l'input et la bordure */
+.input-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input */
+.input {
+    color: #000000;
+    font-size: 0.9rem;
+    background-color: white;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+    border-bottom: var(--border-height) solid var(--border-before-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+/* Bordure dynamique alignée */
+.input-border {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--border-after-color);
+    transition: width 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+/* Lors du focus, la bordure se développe */
+.input:focus + .input-border {
+    width: 100%;
+}
+
+/* Styles alternatifs pour l'input */
+.input-alt {
+    font-size: 1.2rem;
+    padding-inline: 1em;
+    padding-block: 0.8em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    width: 800px;
+}
+
+/* Bordure dynamique pour input-alt */
+.input-border-alt {
+    height: 3px;
+    background: linear-gradient(90deg, #FF6464 0%, #FFBF59 50%, #47C9FF 100%);
+    transition: width 0.4s cubic-bezier(0.42, 0, 0.58, 1.00);
+}
+
+/* Focus pour input-alt */
+.input-alt:focus + .input-border-alt {
+    width: 100%;
+}
+
+/* Conteneur général pour le formulaire */
+.form-control {
+    position: relative;
+    --width-of-input: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px; /* Ajoute un espace entre l'input et le bouton */
+    align-items: center;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+/* Bouton */
+#btn {
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+    text-shadow: none;
+    background: black;  /* Par défaut le fond est noir */
+    cursor: pointer;
+    box-shadow: black;
+    border: 1px solid #00000080;
+    transition: 0.5s ease;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Hover sur le bouton */
+#btn:hover {
+    background: #2ab1b8;  /* Couleur bleu au survol */
+    border: 1px solid #2ab1b8;
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff;
+    box-shadow: 0 0 5px #2ab1b8, 0 0 20px #2ab1b8, 0 0 50px #2ab1b8, 0 0 100px #2ab1b8;
+}
+
+/* Focus sur le bouton (quand il est sélectionné) */
+#btn:focus {
+    background: #2ab838;  /* Couleur verte quand le bouton est cliqué */
+    border: 1px solid #2ab838;
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff;
+    box-shadow: 0 0 5px #2ab838, 0 0 20px #2ab838, 0 0 50px #2ab838, 0 0 100px #2ab838;
+}
+
+
+.hero-background {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* 响应式背景图片 */
+@media (max-width: 576px) {
+    .responsive-background-image {
+        background-image: var(--bg-img-small);
+    }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+    .responsive-background-image {
+        background-image: var(--bg-img-medium);
+    }
+}
+
+@media (min-width: 769px) {
+    .responsive-background-image {
+        background-image: var(--bg-img-large);
+    }
+}
+
+.hero-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 51, 153, 0.1);
+    z-index: 1;
+}
+
+h1 {
+    color: white;
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.subtitle {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+
+/* 探索栏 */
+.explore-section {
+    padding: 60px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.explore-title {
+    font-size: 32px;
+    color: #000000cb;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cards-wrapper {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 20px 0;
+}
+
+.cards-container {
+    display: flex;
+    gap: 20px;
+    padding: 0 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+
+.cards-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.theme-card {
+    flex: 0 0 300px;
+    height: 400px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.theme-card:hover {
+    transform: translateY(-10px);
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+}
+
+.card-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #4051B5;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.card-description {
+    font-size: 14px;
+    line-height: 1.4;
+    color: white;
+    margin-top: 8px;
+    /* 移除了 opacity 和 transform，使描述始终可见 */
+}
+
+.theme-card:hover .card-description {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .theme-card {
+        flex: 0 0 260px;
+        height: 350px;
+    }
+}
