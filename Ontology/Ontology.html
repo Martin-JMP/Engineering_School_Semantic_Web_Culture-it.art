@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Web site created by Culture-It" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <title>Culture-It</title>
+    <link href="../Ressources/Nav_Bar/Nav_Bar.css" rel="stylesheet">
+    <link href="./Design/Ontology.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="center-nav">
+            <a href="../../" class="nav-link" data-name="Text1">Text1</a>
+            <a href="../../" class="nav-link" data-name="Text2">Text2</a>
+            <a href="../../" class="nav-link" data-name="Text3">Text3</a>
+            <a href="../../" class="nav-link" data-name="Text4">Text4</a>
+        </div>
+        <div class="right-nav" id="user-section">
+            <a href="../User/Login/Login.html" class="nav-link" data-name="login">Login</a>
+        </div>
+    </div>
+
+    <div class="page-wrap">
+        <iframe title="Wikidata Query Results" src="https://query.wikidata.org/embed.html#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20bd%3A%20%3Chttp%3A%2F%2Fwww.bigdata.com%2Frdf%23%3E%0A%0ASELECT%20%3FartworkLabel%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fartist)%20AS%20%3Fartist)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FbirthDate)%20AS%20%3FbirthDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FdeathDate)%20AS%20%3FdeathDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fnationality)%20AS%20%3Fnationality)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FnationalityLabel)%20AS%20%3FnationalityLabel)%0A%20%20%20%20%20%20%20(SAMPLE(%3FcompletionDate)%20AS%20%3FcompletionDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FartworkType)%20AS%20%3FartworkType)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fheight)%20AS%20%3Fheight)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fwidth)%20AS%20%3Fwidth)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Flength)%20AS%20%3Flength)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fmuseum)%20AS%20%3Fmuseum)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FmuseumLabel)%20AS%20%3FmuseumLabel)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fimage)%20AS%20%3Fimage)%0AWHERE%20%7B%0A%20%20%3Fartwork%20wdt%3AP31%20wd%3AQ3305213.%20%20%23%20Instance%20of%20artwork%0A%20%20%3Fartwork%20wdt%3AP170%20%3Fartist.%20%20%20%20%20%20%23%20Creator%20(artist)%0A%20%20%3Fartwork%20wdt%3AP18%20%3Fimage.%20%20%20%20%20%20%20%20%23%20Image%0A%20%20%0A%20%20%23%20Artist%20information%0A%20%20%3Fartist%20wdt%3AP569%20%3FbirthDate.%20%20%20%20%20%23%20Date%20of%20birth%0A%20%20OPTIONAL%20%7B%20%3Fartist%20wdt%3AP570%20%3FdeathDate.%20%7D%20%20%20%20%20%20%20%20%20%23%20Date%20of%20death%0A%20%20%3Fartist%20wdt%3AP27%20%3Fnationality.%20%20%20%20%20%20%20%20%23%20Nationality%0A%20%20%0A%20%20%23%20Artwork%20information%0A%20%20%3Fartwork%20wdt%3AP585%20%3FcompletionDate.%20%20%23%20Date%20completed%0A%20%20%3Fartwork%20wdt%3AP31%20%3FartworkType.%20%20%20%20%20%20%20%23%20Artwork%20type%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP2048%20%3Fheight.%20%7D%20%20%20%20%20%20%20%20%20%20%20%23%20Height%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP2046%20%3Fwidth.%20%7D%20%20%20%20%20%20%20%20%20%20%20%20%23%20Width%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP2049%20%3Flength.%20%7D%20%20%20%20%20%20%20%20%20%20%20%23%20Length%0A%20%20%0A%20%20%23%20Museum%20or%20gallery%20information%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP195%20%3Fmuseum.%20%7D%20%20%20%20%20%20%20%20%20%20%20%23%20Museum%20or%20gallery%0A%20%20%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%7D%0AGROUP%20BY%20%3Fartwork%20%3FartworkLabel%0ALIMIT%201000" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-buttons">
+            <a href="../../">Text1</a>
+            <a href="../../">Text2</a>
+            <a href="../../">Text3</a>
+            <a href="../../">Text4</a>
+        </div>
+
+        <!-- For the design -->
+        <div class="bubble1"></div>
+        <div class="bubble2"></div>
+        <div class="bubble3"></div>
+        <div class="bubble4"></div>
+        <div class="bubble5"></div>
+        <div class="bubble6"></div>
+        <div class="bubble7"></div>
+        <div class="bubble8"></div>
+        <div class="bubble9"></div>
+        <div class="bubble10"></div>
+        <div class="bubble11"></div>
+        <div class="bubble12"></div>
+        <div class="bubble13"></div>
+        <div class="bubble14"></div>
+        <div class="bubble15"></div>
+        <div class="bubble16"></div>
+        <div class="bubble17"></div>
+        <div class="bubble18"></div>
+        <div class="bubble19"></div>
+        <div class="bubble20"></div>
+        <div class="bubble21"></div>
+    </footer>
+
+
+    <script defer="defer" src="../Ressources/Nav_Bar/Nav_Bar.js"></script>
+</body>
+
+</html>

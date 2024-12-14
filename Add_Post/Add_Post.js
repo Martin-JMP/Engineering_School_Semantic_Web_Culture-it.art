@@ -81,6 +81,33 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);  // Ensure formData is defined here
+
+        // Log the form data
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        fetch('insert_data.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);  // Print the json_encode response in the console
+            if (data.success) {
+                alert('Data inserted successfully');
+            } else {
+                console.error('Error inserting data:', data.error);
+            }
+        })
+        .catch(error => console.error('Error inserting data:', error));
+    });
+
     function isImageFile(file) {
         const acceptedImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
         return acceptedImageTypes.includes(file.type);
