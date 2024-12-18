@@ -2,14 +2,31 @@ body {
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.body-style {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 100vh;
+
+}
+
+.page-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .main_container {
-    top: 100px;
-    position: absolute;
     width: 80%;
-    TEXT-ALIGN: center;
-    margin-left: 10%;
+    text-align: center;
+    margin: 50px auto 0 auto;
 }
 
 h2, h3 {
@@ -106,7 +123,8 @@ button:hover {
 }
 
 #logout_section{
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 #Subscription_section{
@@ -188,4 +206,21 @@ button:hover {
 .artwork img{
     height: 180px;
     width: 180px;
+}
+
+.site-footer {
+    padding: 15px 0;
+    text-align: center;
+    background: #ffffff;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+
+.artworks-title {
+
+    margin-top: 20px;
+
+    margin-bottom: 10px;
+
 }
