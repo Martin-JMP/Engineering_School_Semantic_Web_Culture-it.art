@@ -36,13 +36,26 @@ try {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
+        // Requête pour récupérer les œuvres d'art de l'utilisateur
+        $sqlArtworks = "SELECT title, file AS image_url FROM artworks WHERE artist_display_name = ?";
+        $stmtArtworks = $conn->prepare($sqlArtworks);
+        $stmtArtworks->bind_param("s", $user['pseudonyme']);
+        $stmtArtworks->execute();
+        $resultArtworks = $stmtArtworks->get_result();
+
+        $artworks = [];
+        while ($artwork = $resultArtworks->fetch_assoc()) {
+            $artworks[] = $artwork;
+        }
+
         // Retourner les informations utilisateur et souscription au format JSON
         echo json_encode([
             'pseudonyme' => $user['pseudonyme'],
             'email' => $user['email'],
             'birth' => $user['birth'],
             'created_at' => $user['created_at'],
-            ]);
+            'artworks' => $artworks
+        ]);
 
     } else {
         echo json_encode(['error' => 'User not found']);
@@ -50,7 +63,7 @@ try {
 
     // Fermer les requêtes et la connexion
     $stmt->close();
-    $stmtSub->close();
+    $stmtArtworks->close();
     $conn->close();
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);

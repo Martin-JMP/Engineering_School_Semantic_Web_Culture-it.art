@@ -29,6 +29,8 @@ html, body {
 
 .page-wrap {
     flex: 1; /* Allows content area to expand and push footer down when needed */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Navbar styles */
@@ -87,6 +89,8 @@ html, body {
     padding: 15px 0;
     text-align: center;
     background: #ffffff;
+    margin-top: auto; /* Ensures footer is pushed to the bottom */
+    flex-shrink: 0; /* Prevents footer from shrinking */
 }
 
 /* Animated bubble effect - common style */

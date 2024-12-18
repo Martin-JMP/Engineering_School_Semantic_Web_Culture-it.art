@@ -7,6 +7,13 @@ document.querySelector('.submit-button').addEventListener('click', function(even
     const birth = document.querySelector('input[placeholder="Date of birth"]').value;
     const password = document.querySelector('input[placeholder="Password"]').value;
     const confirmPassword = document.querySelector('input[placeholder="Confirmation Password"]').value;
+    const cguChecked = document.querySelector('#CGUBox').checked;
+
+    // Vérifier si les CGU sont acceptées
+    if (!cguChecked) {
+        alert("You must accept the CGU to proceed.");
+        return;
+    }
 
     // Préparer les données à envoyer
     const formData = new FormData();

@@ -426,3 +426,13 @@ h1 {
         height: 350px;
     }
 }
+
+.hero-background {
+
+    --bg-img-small: url('https://images.ctfassets.net/i01duvb6kq77/6TdNB5W3Cha4hj4ab6vHZz/bb229ff293d0cf55b29e5f88a1da1fa3/Heuvellandschap_met_varkenshoeder_en_andere_stoffage__een_rivier_in_de_verte?w=576&h=896&fit=fill&fm=webp&q=40');
+
+    --bg-img-medium: url('https://images.ctfassets.net/i01duvb6kq77/6TdNB5W3Cha4hj4ab6vHZz/bb229ff293d0cf55b29e5f88a1da1fa3/Heuvellandschap_met_varkenshoeder_en_andere_stoffage__een_rivier_in_de_verte?w=768&h=1080&fit=fill&fm=webp&q=40');
+
+    --bg-img-large: url('https://images.ctfassets.net/i01duvb6kq77/6TdNB5W3Cha4hj4ab6vHZz/bb229ff293d0cf55b29e5f88a1da1fa3/Heuvellandschap_met_varkenshoeder_en_andere_stoffage__een_rivier_in_de_verte?w=992&h=1080&fit=fill&fm=webp&q=40');
+
+}

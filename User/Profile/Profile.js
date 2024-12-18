@@ -11,15 +11,32 @@ function fetchUserProfile() {
                 const emailElement = document.getElementById('email');
                 const birthElement = document.getElementById('birth');
                 const createdAtElement = document.getElementById('created_at');
-                
+                const artworksContainer = document.getElementById('artworks_container');
 
                 // Vérifier si les éléments existent dans le DOM
-                if (pseudonymeElement && emailElement && createdAtElement) {
+                if (pseudonymeElement && emailElement && createdAtElement && artworksContainer) {
                     // Affichage des informations utilisateur
                     pseudonymeElement.textContent = data.pseudonyme;
                     emailElement.textContent = data.email;
                     birthElement.textContent = data.birth;
                     createdAtElement.textContent = data.created_at;
+
+                    // Affichage des œuvres d'art de l'utilisateur
+                    data.artworks.forEach(artwork => {
+                        const artworkElement = document.createElement('div');
+                        artworkElement.classList.add('artwork');
+
+                        const artworkTitle = document.createElement('h4');
+                        artworkTitle.textContent = artwork.title;
+
+                        const artworkImage = document.createElement('img');
+                        artworkImage.src = `../../Upload/${artwork.image_url}`;
+                        artworkImage.alt = artwork.title;
+
+                        artworkElement.appendChild(artworkTitle);
+                        artworkElement.appendChild(artworkImage);
+                        artworksContainer.appendChild(artworkElement);
+                    });
 
                 } else {
                     console.error('Required DOM elements are missing.');

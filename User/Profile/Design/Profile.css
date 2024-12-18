@@ -173,3 +173,19 @@ button:hover {
     margin-bottom: 40px;
 
 }
+
+#artworks_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.artwork{
+    height: 200px;
+    width: 200px;
+}
+
+.artwork img{
+    height: 180px;
+    width: 180px;
+}

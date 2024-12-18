@@ -11,7 +11,7 @@
     <link href="./Design/Profile.css" rel="stylesheet">
 </head>
 
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
     <div class="navbar">
         <div class="center-nav">
             <a href="../../" class="nav-link" data-name="Text1">Text1</a>
@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class = "page-wrap">
+    <div class="page-wrap" style="flex: 1;">
         <div class="main_container">
             <div class="profile_card">
                 <h2>Your Profile</h2>
@@ -50,6 +50,11 @@
                             <button id="submit_password_change">Change Password</button>
                         </div>
                     </div>
+                </div>
+
+                <div id="artworks_section">
+                    <h3 style="margin-top: 20px; margin-bottom: 10px;">Your Artworks</h3>
+                    <div id="artworks_container"></div>
                 </div>
 
                 <div id="add_artwork_section">
