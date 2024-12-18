@@ -224,3 +224,21 @@ button:hover {
     margin-bottom: 10px;
 
 }
+
+.delete-button {
+    position: relative;
+    top: 5px;
+    right: 5px;
+    background: white;
+    color: red;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 20px;
+}

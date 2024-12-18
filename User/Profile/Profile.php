@@ -22,6 +22,27 @@ try {
         throw new Exception("Connection failed: " . $conn->connect_error);
     }
 
+    // Endpoint to handle artwork deletion
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_artwork'])) {
+        $artwork_id = $_POST['artwork_id'];
+        $image_url = $_POST['image_url'];
+
+        // Delete artwork from database
+        $sqlDelete = "DELETE FROM artworks WHERE id = ?";
+        $stmtDelete = $conn->prepare($sqlDelete);
+        $stmtDelete->bind_param("i", $artwork_id);
+        $stmtDelete->execute();
+
+        // Delete image file from server
+        $filePath = '../../Upload/' . basename($image_url);
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        echo json_encode(['success' => true]);
+        exit;
+    }
+
     // Récupérer les informations de l'utilisateur connecté
     $user_id = $_SESSION['user_id'];
     
@@ -37,7 +58,7 @@ try {
         $user = $result->fetch_assoc();
 
         // Requête pour récupérer les œuvres d'art de l'utilisateur
-        $sqlArtworks = "SELECT title, file AS image_url FROM artworks WHERE artist_display_name = ?";
+        $sqlArtworks = "SELECT id, title, file AS image_url FROM artworks WHERE artist_display_name = ?";
         $stmtArtworks = $conn->prepare($sqlArtworks);
         $stmtArtworks->bind_param("s", $user['pseudonyme']);
         $stmtArtworks->execute();

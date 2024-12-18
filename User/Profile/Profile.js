@@ -21,22 +21,34 @@ function fetchUserProfile() {
                     birthElement.textContent = data.birth;
                     createdAtElement.textContent = data.created_at;
 
-                    // Affichage des œuvres d'art de l'utilisateur
-                    data.artworks.forEach(artwork => {
-                        const artworkElement = document.createElement('div');
-                        artworkElement.classList.add('artwork');
+                    // Affichage des œuvres d'art de l'utilisateur avec bouton de suppression
+                    if (data.artworks.length > 0) {
+                        document.querySelector('.artworks-title').classList.remove('hidden');
+                        data.artworks.forEach(artwork => {
+                            const artworkElement = document.createElement('div');
+                            artworkElement.classList.add('artwork');
+                            artworkElement.id = `artwork_${artwork.id}`;
 
-                        const artworkTitle = document.createElement('h4');
-                        artworkTitle.textContent = artwork.title;
+                            const deleteButton = document.createElement('button');
+                            deleteButton.textContent = '✖';
+                            deleteButton.classList.add('delete-button');
+                            deleteButton.onclick = () => deleteArtwork(artwork.id, artwork.image_url);
 
-                        const artworkImage = document.createElement('img');
-                        artworkImage.src = `../../Upload/${artwork.image_url}`;
-                        artworkImage.alt = artwork.title;
+                            const artworkTitle = document.createElement('h4');
+                            artworkTitle.textContent = artwork.title;
 
-                        artworkElement.appendChild(artworkTitle);
-                        artworkElement.appendChild(artworkImage);
-                        artworksContainer.appendChild(artworkElement);
-                    });
+                            const artworkImage = document.createElement('img');
+                            artworkImage.src = `../../Upload/${artwork.image_url}`;
+                            artworkImage.alt = artwork.title;
+
+                            artworkElement.appendChild(deleteButton);
+                            artworkElement.appendChild(artworkTitle);
+                            artworkElement.appendChild(artworkImage);
+                            artworksContainer.appendChild(artworkElement);
+                        });
+                    } else {
+                        document.querySelector('.artworks-title').classList.add('hidden');
+                    }
 
                 } else {
                     console.error('Required DOM elements are missing.');
@@ -44,6 +56,35 @@ function fetchUserProfile() {
             }
         })
         .catch(error => console.error('Error fetching user profile:', error));
+}
+
+// Fonction pour supprimer une œuvre d'art
+function deleteArtwork(artworkId, imageUrl) {
+    fetch('Profile.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            delete_artwork: true,
+            artwork_id: artworkId,
+            image_url: imageUrl
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Supprimer l'élément de l'œuvre d'art du DOM
+            document.getElementById(`artwork_${artworkId}`).remove();
+            // Hide the "Your Artworks" title if no artworks remain
+            if (document.getElementById('artworks_container').children.length === 0) {
+                document.querySelector('.artworks-title').classList.add('hidden');
+            }
+        } else {
+            alert("Error deleting artwork.");
+        }
+    })
+    .catch(error => console.error('Error deleting artwork:', error));
 }
 
 // Charger les informations utilisateur et gérer les événements après le chargement complet du DOM
