@@ -140,7 +140,7 @@ button:hover {
 #add_artwork_btn {
     color: white;
     cursor: pointer;
-    background: black;
+    background: rgb(0, 129, 43);
     width: 250px;
     height: 50px;
     border-radius: 10px;
