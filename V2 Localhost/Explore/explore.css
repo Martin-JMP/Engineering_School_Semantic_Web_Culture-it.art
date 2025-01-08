@@ -355,8 +355,14 @@ h1 {
     padding: 0 20px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none; /* Standard property for compatibility */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    overflow: -moz-scrollbars-none; /* Fallback for older browsers */
+    -webkit-overflow-scrolling: touch; /* Fallback for Safari */
+    }
+    
+    .cards-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
 }
 
 .cards-container::-webkit-scrollbar {
@@ -435,4 +441,32 @@ h1 {
 
     --bg-img-large: url('https://images.ctfassets.net/i01duvb6kq77/6TdNB5W3Cha4hj4ab6vHZz/bb229ff293d0cf55b29e5f88a1da1fa3/Heuvellandschap_met_varkenshoeder_en_andere_stoffage__een_rivier_in_de_verte?w=992&h=1080&fit=fill&fm=webp&q=40');
 
+}
+
+/* Search Results */
+.search-results {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+}
+
+.search-result-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-title {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.search-result-description {
+    font-size: 0.9rem;
+    color: #666;
 }
