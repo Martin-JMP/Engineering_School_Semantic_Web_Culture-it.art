@@ -1,0 +1,246 @@
+.artist-info{
+    z-index: 15;
+    position: relative;
+    top: 30px;
+    width: 30%;
+    left: 13%;
+}
+
+#artist-name{
+    padding-bottom: 20px;
+}
+
+.artwork-info{
+    z-index: 20;
+    position: relative;
+    width: 30%;
+    top: 30px;
+    right: 2%;   
+}
+
+#artwork-title{
+    padding-bottom: 20px;
+}
+
+.artwork-image {
+    z-index: 10;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: 40%;
+    width: 40%;
+}
+
+#artwork-image {
+
+    width: 40%;
+
+}
+
+.main-artist{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+#artwork-end-date,
+#artwork-country,
+#artwork-style,
+#artwork-culture,
+#artwork-medium,
+#artwork-dimensions,
+#artwork-department,
+#artwork-museum-location {
+    margin-bottom: 5px;
+}
+
+.discussion-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.discussion-title {
+
+    margin-bottom: 10px;
+
+}
+
+.ligne{
+    height: 5px;
+    width: 95%;
+    background-color: rgb(83, 83, 83);
+    margin-bottom: 10px;
+    border-radius: 25px;
+}
+
+
+/* Conteneur pour aligner l'input et la bordure */
+.input-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input */
+.input {
+    color: #000000;
+    font-size: 0.9rem;
+    background-color: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+    border-bottom: var(--border-height) solid var(--border-before-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+/* Bordure dynamique alignée */
+.input-border {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--border-after-color);
+    transition: width 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+/* Lors du focus, la bordure se développe */
+.input:focus + .input-border {
+    width: 100%;
+}
+
+/* Styles alternatifs pour l'input */
+.input-alt {
+    font-size: 1.2rem;
+    padding-inline: 1em;
+    padding-block: 0.8em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    width: 800px;
+}
+
+/* Bordure dynamique pour input-alt */
+.input-border-alt {
+    height: 3px;
+    background: linear-gradient(90deg, #FF6464 0%, #FFBF59 50%, #47C9FF 100%);
+    transition: width 0.4s cubic-bezier(0.42, 0, 0.58, 1.00);
+}
+
+/* Focus pour input-alt */
+.input-alt:focus + .input-border-alt {
+    width: 100%;
+}
+
+/* Conteneur général pour le formulaire */
+.form-control {
+    position: relative;
+    --width-of-input: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px; /* Ajoute un espace entre l'input et le bouton */
+    align-items: center;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+/* Bouton */
+#btn {
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+    text-shadow: none;
+    background: black;  /* Par défaut le fond est noir */
+    cursor: pointer;
+    box-shadow: black;
+    border: 1px solid #00000080;
+    transition: 0.5s ease;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Hover sur le bouton */
+#btn:hover {
+    background: #2ab1b8;  /* Couleur bleu au survol */
+    border: 1px solid #2ab1b8;
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff;
+    box-shadow: 0 0 5px #2ab1b8, 0 0 20px #2ab1b8, 0 0 50px #2ab1b8, 0 0 100px #2ab1b8;
+}
+
+/* Focus sur le bouton (quand il est sélectionné) */
+#btn:focus {
+    background: #2ab838;  /* Couleur verte quand le bouton est cliqué */
+    border: 1px solid #2ab838;
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff;
+    box-shadow: 0 0 5px #2ab838, 0 0 20px #2ab838, 0 0 50px #2ab838, 0 0 100px #2ab838;
+}
+
+
+.zone-comment{
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0px -1px 8px #8a8a8a, 11px 11px 100px #ffffff;
+    color: #000000;
+    width: 700px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.comment{
+    display: flex;
+    justify-content: center;
+}
+
+.comment-date{
+    color: grey;
+    font-size: 13px;
+}
+
+.comment-user{
+    color: grey;
+}
+  
+
+
+#no-comments {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.interest-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    flex-direction: row;
+    top: -20px;
+    position: relative;
+    justify-content: flex-end;
+}
+
+.interest-count {
+    margin: 0 10px;
+}
+
+.interest-container button {
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+}

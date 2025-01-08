@@ -1,0 +1,244 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.body-style {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 100vh;
+
+}
+
+.page-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main_container {
+    width: 80%;
+    text-align: center;
+    margin: 50px auto 0 auto;
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 40px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+button {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+#change_password_btn_title {
+    cursor: default;
+    font-weight: bold;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#password_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#change_password_btn{
+    color: white;
+    cursor: pointer;
+    background: black;
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#password_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+}
+
+
+#password_form_hide{
+    transform: translate(15%, 0px);
+}
+
+#logout_section{
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+#Subscription_section{
+    margin-top: 10px;
+}
+
+#add_artwork_section {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#add_artwork_btn {
+    color: white;
+    cursor: pointer;
+    background: rgb(0, 129, 43);
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Media query pour les écrans inférieurs à 450px */
+@media (max-width: 450px) {
+
+    h2 {
+        font-size: 23px;
+        margin-bottom: 20px;
+        margin-top: -20px;
+    }
+
+    h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+
+    #change_password_btn{
+        width: 200px;
+        height: 40px;
+        font-size: 1em;
+    }
+
+    #logout_section{
+        margin-top: 10px;
+    }
+
+}
+
+
+.profile-info {
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.account-created {
+
+    margin-bottom: 40px;
+
+}
+
+#artworks_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.artwork{
+    height: 200px;
+    width: 200px;
+}
+
+.artwork img{
+    height: 180px;
+    width: 180px;
+}
+
+.site-footer {
+    padding: 15px 0;
+    text-align: center;
+    background: #ffffff;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+
+.artworks-title {
+
+    margin-top: 20px;
+
+    margin-bottom: 10px;
+
+}
+
+.delete-button {
+    position: relative;
+    top: 5px;
+    right: 5px;
+    background: white;
+    color: red;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 20px;
+}

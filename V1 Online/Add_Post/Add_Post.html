@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Web site created by Culture-It" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <title>Culture-It</title>
+    <link href="../Ressources/Nav_Bar/Nav_Bar.css" rel="stylesheet">
+    <link href="./Design/Add_Post.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="center-nav">
+            <a href="../../" class="nav-link" data-name="Text1">Text1</a>
+            <a href="../../" class="nav-link" data-name="Text2">Text2</a>
+            <a href="../../" class="nav-link" data-name="Text3">Text3</a>
+            <a href="../../" class="nav-link" data-name="Text4">Text4</a>
+        </div>
+        <div class="right-nav" id="user-section">
+            <a href="../User/Login/Login.html" class="nav-link" data-name="login">Login</a>
+        </div>
+    </div>
+
+    <div class="page-wrap" id="page-content">
+        <form class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-md" enctype="multipart/form-data">
+            <div id="deposit-box" class="deposit-box mb-4">
+                <p>Drag & Drop your file here or click to upload</p>
+                <label for="file-input" id="file-name-label">Uploaded File:</label>
+                <input type="file" id="file-input" name="file" multiple class="hidden-input" title="Choose a file to upload">
+            </div>
+            <button id="remove-file-button" class="hidden-button mb-4" type="button">Remove File</button>
+            <h2 id="artwork-informations" class="text-2xl font-bold mb-4">Artwork Informations</h2>
+            <div class="mb-4">
+                <label for="exact-file-name" class="block text-gray-700 font-bold mb-2">Exact File Name:</label>
+                <input type="text" id="exact-file-name" name="exact-file-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="artwork-title" class="block text-gray-700 font-bold mb-2">Title:</label>
+                <input type="text" id="artwork-title" name="artwork-title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="artwork-end-date" class="block text-gray-700 font-bold mb-2">Date:</label>
+                <input type="text" id="artwork-end-date" name="artwork-end-date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="artwork-country" class="block text-gray-700 font-bold mb-2">Localisation:</label>
+                <input type="text" id="artwork-country" name="artwork-country" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="artwork-culture" class="block text-gray-700 font-bold mb-2">Culture:</label>
+                <input type="text" id="artwork-culture" name="artwork-culture" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="artwork-medium" class="block text-gray-700 font-bold mb-2">Medium:</label>
+                <input type="text" id="artwork-medium" name="artwork-medium" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="artwork-dimensions" class="block text-gray-700 font-bold mb-2">Dimensions:</label>
+                <input type="text" id="artwork-dimensions" name="artwork-dimensions" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="artwork-description" class="block text-gray-700 font-bold mb-2">Description:</label>
+                <input type="text" id="artwork-description" name="artwork-description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+        </form>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-buttons">
+            <a href="../../">Text1</a>
+            <a href="../../">Text2</a>
+            <a href="../../">Text3</a>
+            <a href="../../">Text4</a>
+        </div>
+
+        <!-- For the design -->
+        <div class="bubble1"></div>
+        <div class="bubble2"></div>
+        <div class="bubble3"></div>
+        <div class="bubble4"></div>
+        <div class="bubble5"></div>
+        <div class="bubble6"></div>
+        <div class="bubble7"></div>
+        <div class="bubble8"></div>
+        <div class="bubble9"></div>
+        <div class="bubble10"></div>
+        <div class="bubble11"></div>
+        <div class="bubble12"></div>
+        <div class="bubble13"></div>
+        <div class="bubble14"></div>
+        <div class="bubble15"></div>
+        <div class="bubble16"></div>
+        <div class="bubble17"></div>
+        <div class="bubble18"></div>
+        <div class="bubble19"></div>
+        <div class="bubble20"></div>
+        <div class="bubble21"></div>
+    </footer>
+
+    <script defer="defer" src="../Ressources/Nav_Bar/Nav_Bar.js"></script>
+    <script defer="defer" src="Add_Post.js"></script>
+    <script defer="defer" src="../user_session.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('check_artist_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.logged_in && data.is_artist) {
+                        document.getElementById('page-content').style.display = 'block';
+                    } else {
+                        window.location.href = '../User/Login/Login.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking session:', error);
+                    window.location.href = '../User/Login/Login.html';
+                });
+        });
+    </script>
+</body>
+</html>
