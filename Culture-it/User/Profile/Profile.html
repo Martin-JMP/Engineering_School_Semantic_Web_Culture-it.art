@@ -14,10 +14,9 @@
 <body class="body-style">
     <div class="navbar">
         <div class="center-nav">
-            <a href="../../" class="nav-link" data-name="Text1">Text1</a>
-            <a href="../../" class="nav-link" data-name="Text2">Text2</a>
-            <a href="../../" class="nav-link" data-name="Text3">Text3</a>
-            <a href="../../" class="nav-link" data-name="Text4">Text4</a>
+            <a href="../../index.html" class="nav-link" data-name="Text1">Home</a>
+            <a href="../../Ontology/Ontology.html" class="nav-link" data-name="Text2">Ontology Graphs</a>
+            <a href="../../Explore/explore.html" class="nav-link" data-name="Text3">Research</a>
         </div>
         <div class="right-nav" id="user-section">
             <a class="nav-link" data-name="login">Login</a>
@@ -51,20 +50,22 @@
                         </div>
                     </div>
                 </div>
+                
+                <div id="artworks_main_section">
+                    <div id="artworks_section">
+                        <h3 class="artworks-title">Your Artworks</h3>
+                        <div id="artworks_container"></div>
+                    </div>
 
-                <div id="artworks_section">
-                    <h3 class="artworks-title">Your Artworks</h3>
-                    <div id="artworks_container"></div>
+                    <div id="add_artwork_section">
+                        <button id="add_artwork_btn">Add Artwork</button>
+                    </div>
+                    <script>
+                        document.getElementById("add_artwork_btn").addEventListener("click", function() {
+                            window.location.href = "../../Add_Post/Add_Post.html";
+                        });
+                    </script>
                 </div>
-
-                <div id="add_artwork_section">
-                    <button id="add_artwork_btn">Add Artwork</button>
-                </div>
-                <script>
-                    document.getElementById("add_artwork_btn").addEventListener("click", function() {
-                        window.location.href = "../../Add_Post/Add_Post.html";
-                    });
-                </script>
 
                 <div id="logout_section">
                     <button id="logout_btn">Logout</button>
@@ -74,10 +75,9 @@
         </div>
         <footer class="site-footer">
             <div class="footer-buttons">
-                <a href="../../">Text1</a>
-                <a href="../../">Text2</a>
-                <a href="../../">Text3</a>
-                <a href="../../">Text4</a>
+                <a href="../../index.html">Home</a>
+                <a href="../../Ontology/Ontology.html">Ontology Graphs</a>
+                <a href="../../Explore/explore.html">Research</a>
             </div>
 
             <!-- For the design -->

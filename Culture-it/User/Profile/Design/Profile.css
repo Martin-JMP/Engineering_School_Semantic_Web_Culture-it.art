@@ -242,3 +242,7 @@ button:hover {
     align-items: center;
     line-height: 20px;
 }
+
+#artworks_main_section.hidden {
+    display: none;
+}

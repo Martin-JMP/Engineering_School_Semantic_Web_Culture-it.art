@@ -1,17 +1,9 @@
 <?php
-// Connexion à la base de données
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+header('Content-Type: application/json');
 
-// Création de la connexion
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Vérifier la connexion
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// SPARQL endpoint
+$sparqlEndpoint = "http://localhost:3030/Test-artworks8OBJECT-USERS/query";
+$sparqlUpdateEndpoint = "http://localhost:3030/Test-artworks8OBJECT-USERS/update";
 
 // Vérifier si les données sont envoyées via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -29,46 +21,107 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Vérifier que l'email n'existe pas déjà dans la base de données
-    $emailCheckQuery = $conn->prepare("SELECT email FROM users WHERE email = ?");
-    $emailCheckQuery->bind_param("s", $email);
-    $emailCheckQuery->execute();
-    $emailCheckQuery->store_result();
+    $sparqlQueryEmailCheck = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    SELECT ?email
+    WHERE {
+        ?user rdf:type ag:User ;
+            ag:email ?email .
+        FILTER(?email = \"$email\")
+    }";
 
-    if ($emailCheckQuery->num_rows > 0) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $sparqlEndpoint);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('query' => $sparqlQueryEmailCheck)));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $responseEmailCheck = curl_exec($ch);
+    $dataEmailCheck = json_decode($responseEmailCheck, true);
+
+    if (!empty($dataEmailCheck['results']['bindings'])) {
         echo json_encode(['status' => 'error', 'message' => 'Email already exists!']);
-        $emailCheckQuery->close();
+        curl_close($ch);
         exit();
     }
-    $emailCheckQuery->close();
 
     // Vérifier que le pseudo n'existe pas déjà dans la base de données
-    $pseudonymeCheckQuery = $conn->prepare("SELECT pseudonyme FROM users WHERE pseudonyme = ?");
-    $pseudonymeCheckQuery->bind_param("s", $email);
-    $pseudonymeCheckQuery->execute();
-    $pseudonymeCheckQuery->store_result();
-    
-    if ($pseudonymeCheckQuery->num_rows > 0) {
+    $sparqlQueryPseudonymeCheck = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    SELECT ?pseudonyme
+    WHERE {
+        ?user rdf:type ag:User ;
+        ag:pseudonyme ?pseudonyme .
+        FILTER(?pseudonyme = \"$pseudonyme\")
+        }";
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('query' => $sparqlQueryPseudonymeCheck)));
+    $responsePseudonymeCheck = curl_exec($ch);
+    $dataPseudonymeCheck = json_decode($responsePseudonymeCheck, true);
+
+    if (!empty($dataPseudonymeCheck['results']['bindings'])) {
         echo json_encode(['status' => 'error', 'message' => 'Pseudonyme already exists!']);
-        $pseudonymeCheckQuery->close();
+        curl_close($ch);
         exit();
     }
-    $pseudonymeCheckQuery->close();
 
     // Hacher le mot de passe avec bcrypt
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-    // Insérer l'utilisateur dans la base de données
-    $insertQuery = $conn->prepare("INSERT INTO users (pseudonyme, email, password_hash, birth, created_at) VALUES (?, ?, ?, ?, NOW())");
-    $insertQuery->bind_param("ssss", $pseudonyme, $email, $hashed_password, $birth);
+    // Récupérer le dernier ID utilisateur
+    $sparqlQueryMaxId = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    SELECT (MAX(?id) AS ?maxId)
+    WHERE {
+        ?user rdf:type ag:User ;
+              ag:id ?id .
+    }";
 
-    if ($insertQuery->execute()) {
-        echo json_encode(['status' => 'success', 'message' => 'User registered successfully!']);
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Error registering user!']);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('query' => $sparqlQueryMaxId)));
+    $responseMaxId = curl_exec($ch);
+    $dataMaxId = json_decode($responseMaxId, true);
+    curl_close($ch);
+
+    $newId = 1;
+    if (!empty($dataMaxId['results']['bindings'])) {
+        $newId = intval($dataMaxId['results']['bindings'][0]['maxId']['value']) + 1;
     }
 
-    // Fermer les connexions
-    $insertQuery->close();
-    $conn->close();
+    // Insérer l'utilisateur dans la base de données
+    $sparqlUpdateQuery = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    INSERT DATA {
+        _:user rdf:type ag:User ;
+               ag:id \"$newId\"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+               ag:pseudonyme \"$pseudonyme\" ;
+               ag:email \"$email\" ;
+               ag:password_hash \"$hashed_password\" ;
+               ag:birth \"$birth\"^^<http://www.w3.org/2001/XMLSchema#date> ;
+               ag:created_at \"" . date('Y-m-d\TH:i:s') . "\"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+               ag:Artist \"0\"^^<http://www.w3.org/2001/XMLSchema#integer> .
+    }";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $sparqlUpdateEndpoint);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('update' => $sparqlUpdateQuery)));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $updateResponse = curl_exec($ch);
+    curl_close($ch);
+
+    if ($updateResponse === false) {
+        echo json_encode(['status' => 'error', 'message' => 'Error registering user!']);
+    } else {
+        echo json_encode(['status' => 'success', 'message' => 'User registered successfully!']);
+    }
 }
 ?>

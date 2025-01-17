@@ -1,43 +1,69 @@
-
 <?php
-ini_set('display_errors', 0);
-error_reporting(E_ALL);
-
 header('Content-Type: application/json');
 
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+// SPARQL Endpoint URL
+$sparqlEndpoint = "http://localhost:3030/Test-artworks7OBJECT-USERS/update";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Get the comment ID and action from the POST request
+$commentId = $_POST['commentId'] ?? null;
+$action = $_POST['action'] ?? null;
 
-if ($conn->connect_error) {
-    echo json_encode(['error' => "Connection failed: " . $conn->connect_error]);
+if (!$commentId || !$action) {
+    echo json_encode(['error' => "Missing commentId or action"]);
     exit;
 }
 
-$commentId = $_POST['commentId'];
-$action = $_POST['action'];
-
+// Determine the SPARQL query based on the action
 if ($action === 'add') {
-    $updateQuery = $conn->prepare("UPDATE Comments SET interest = interest + 1 WHERE id = ?");
+    $sparqlQuery = "
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    DELETE { ?comment ag:interest ?interest }
+    INSERT { ?comment ag:interest ?newInterest }
+    WHERE {
+        ?comment ag:id \"$commentId\" ;
+                 ag:interest ?interest .
+        BIND((?interest + 1) AS ?newInterest)
+    }";
 } elseif ($action === 'remove') {
-    $updateQuery = $conn->prepare("UPDATE Comments SET interest = interest - 1 WHERE id = ?");
+    $sparqlQuery = "
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    DELETE { ?comment ag:interest ?interest }
+    INSERT { ?comment ag:interest ?newInterest }
+    WHERE {
+        ?comment ag:id \"$commentId\" ;
+                 ag:interest ?interest .
+        BIND((?interest - 1) AS ?newInterest)
+    }";
 } else {
     echo json_encode(['error' => "Invalid action"]);
     exit;
 }
 
-$updateQuery->bind_param("i", $commentId);
-$updateQuery->execute();
+// Send the query to the SPARQL endpoint
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $sparqlEndpoint);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['update' => $sparqlQuery]));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
 
-if ($updateQuery->affected_rows > 0) {
-    echo json_encode(['success' => true]);
-} else {
-    echo json_encode(['error' => "Failed to update interest"]);
+// Execute the query
+$response = curl_exec($ch);
+
+// Check for cURL errors
+if (curl_errno($ch)) {
+    echo json_encode(['error' => "cURL error: " . curl_error($ch)]);
+    exit;
 }
 
-$updateQuery->close();
-$conn->close();
+curl_close($ch);
+
+// Check the response
+if ($response === false) {
+    echo json_encode(['error' => "Failed to update interest"]);
+} else {
+    echo json_encode(['success' => true]);
+}
 ?>

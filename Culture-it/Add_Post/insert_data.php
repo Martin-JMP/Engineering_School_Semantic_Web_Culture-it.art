@@ -1,27 +1,10 @@
 <?php
 header('Content-Type: application/json');
+session_start();
 
-// Enable error logging
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// Database connection parameters
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check the database connection
-if ($conn->connect_error) {
-    error_log("Connection failed: " . $conn->connect_error);
-    echo json_encode(['error' => "Connection failed: " . $conn->connect_error]);
-    exit;
-}
-
-session_start();  // Start the session to access session variables
+// SPARQL Endpoint URL
+$sparqlEndpoint = "http://localhost:3030/Test-artworks8OBJECT-USERS/update";
+$sparqlQueryEndpoint = "http://localhost:3030/Test-artworks8OBJECT-USERS/query";
 
 // Retrieve POST data
 $object_id = 9999999;
@@ -35,30 +18,131 @@ $description = $_POST['artwork-description'] ?? null;
 $exact_file_name = $_POST['exact-file-name'] ?? null;
 $artist_display_name = $_SESSION['pseudonyme'] ?? null;  // Retrieve artist display name from session
 
-// Log the data being inserted
-$log_message = "Data to be inserted: object_id=$object_id, title=$title, artist_display_name=$artist_display_name, object_end_date=$object_end_date, medium=$medium, culture=$culture, dimensions=$dimensions, country=$country, description=$description, file=$exact_file_name";
-error_log($log_message);
+// Log received POST data for debugging
+error_log("Received POST data: " . json_encode($_POST));
 
-// Prepare the SQL statement
-$stmt = $conn->prepare("INSERT INTO artworks (object_id, title, artist_display_name, object_end_date, medium, culture, dimensions, country, description, file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-if (!$stmt) {
-    error_log("Prepare failed: " . $conn->error);
-    echo json_encode(['error' => "Prepare failed: " . $conn->error]);
+// Log each individual POST data field for debugging
+error_log("artwork-title: " . $title);
+error_log("artwork-end-date: " . $object_end_date);
+error_log("artwork-medium: " . $medium);
+error_log("artwork-culture: " . $culture);
+error_log("artwork-dimensions: " . $dimensions);
+error_log("artwork-country: " . $country);
+error_log("artwork-description: " . $description);
+error_log("exact-file-name: " . $exact_file_name);
+error_log("artist_display_name: " . $artist_display_name);
+
+if (!$title) {
+    echo json_encode(['error' => "Missing required data: artwork-title"]);
+    exit;
+}
+if (!$object_end_date) {
+    echo json_encode(['error' => "Missing required data: artwork-end-date"]);
+    exit;
+}
+if (!$medium) {
+    echo json_encode(['error' => "Missing required data: artwork-medium"]);
+    exit;
+}
+if (!$culture) {
+    echo json_encode(['error' => "Missing required data: artwork-culture"]);
+    exit;
+}
+if (!$dimensions) {
+    echo json_encode(['error' => "Missing required data: artwork-dimensions"]);
+    exit;
+}
+if (!$country) {
+    echo json_encode(['error' => "Missing required data: artwork-country"]);
+    exit;
+}
+if (!$description) {
+    echo json_encode(['error' => "Missing required data: artwork-description"]);
+    exit;
+}
+if (!$exact_file_name) {
+    echo json_encode(['error' => "Missing required data: exact-file-name"]);
+    exit;
+}
+if (!$artist_display_name) {
+    echo json_encode(['error' => "Missing required data: artist_display_name"]);
     exit;
 }
 
-// Ensure all variables are defined and match the placeholders
-$stmt->bind_param("ississssss", $object_id, $title, $artist_display_name, $object_end_date, $medium, $culture, $dimensions, $country, $description, $exact_file_name);
+try {
+    // Retrieve the last registered ID
+    $sparqlQueryMaxId = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    SELECT (MAX(?id) AS ?maxId)
+    WHERE {
+        ?artwork rdf:type ag:Artwork ;
+                 ag:id ?id .
+    }";
 
-// Execute the statement
-if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'log' => $log_message]);
-} else {
-    error_log("Execute failed: " . $stmt->error);
-    echo json_encode(['error' => $stmt->error, 'log' => $log_message]);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $sparqlQueryEndpoint);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('query' => $sparqlQueryMaxId)));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $responseMaxId = curl_exec($ch);
+    $dataMaxId = json_decode($responseMaxId, true);
+    curl_close($ch);
+
+    $newId = 1;
+    if (!empty($dataMaxId['results']['bindings'])) {
+        $newId = intval($dataMaxId['results']['bindings'][0]['maxId']['value']) + 1;
+    }
+
+    // SPARQL query to insert the artwork data
+    $sparqlQuery = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    INSERT DATA {
+      _:artwork rdf:type art:Artwork ;
+                ag:id \"$newId\"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                ag:object_id $object_id ;
+                ag:title \"$title\" ;
+                ag:object_end_date \"$object_end_date\" ;
+                ag:medium \"$medium\" ;
+                ag:culture \"$culture\" ;
+                ag:dimensions \"$dimensions\" ;
+                ag:country \"$country\" ;
+                ag:description \"$description\" ;
+                ag:file \"$exact_file_name\" ;
+                ag:artist_display_name \"$artist_display_name\" .
+    }";
+
+    // Send the query to the SPARQL endpoint
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $sparqlEndpoint);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['update' => $sparqlQuery]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
+
+    // Execute the query
+    $response = curl_exec($ch);
+
+    // Check for cURL errors
+    if (curl_errno($ch)) {
+        echo json_encode(['error' => "cURL error: " . curl_error($ch)]);
+        exit;
+    }
+
+    curl_close($ch);
+
+    // Check the response
+    if ($response === false) {
+        echo json_encode(['error' => "Failed to insert data"]);
+    } else {
+        echo json_encode(['success' => true, 'id' => $newId]);
+    }
+
+} catch (Exception $e) {
+    echo json_encode(['error' => $e->getMessage()]);
 }
-
-// Close the statement and connection
-$stmt->close();
-$conn->close();
 ?>

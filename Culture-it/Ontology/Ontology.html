@@ -9,31 +9,40 @@
     <title>Culture-It</title>
     <link href="../Ressources/Nav_Bar/Nav_Bar.css" rel="stylesheet">
     <link href="./Design/Ontology.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 
 <body>
+    <div class="back-button-container" id="back-button-container" style="display: none;">
+        <button class="back-button" onclick="showMenu()">Back to Ontology Menu</button>
+    </div>
     <div class="navbar">
         <div class="center-nav">
-            <a href="../../" class="nav-link" data-name="Text1">Text1</a>
-            <a href="../../" class="nav-link" data-name="Text2">Text2</a>
-            <a href="../../" class="nav-link" data-name="Text3">Text3</a>
-            <a href="../../" class="nav-link" data-name="Text4">Text4</a>
+            <a href="../index.html" class="nav-link" data-name="Text1">Home</a>
+            <a class="nav-link" data-name="Text2">Ontology Graphs</a>
+            <a href="../Explore/explore.html" class="nav-link" data-name="Text3">Research</a>
         </div>
         <div class="right-nav" id="user-section">
             <a href="../User/Login/Login.html" class="nav-link" data-name="login">Login</a>
         </div>
     </div>
 
-    <div class="page-wrap" style="display: flex; justify-content: center; align-items: center;">
-        <iframe title="Wikidata Query Results" src="https://query.wikidata.org/embed.html#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20bd%3A%20%3Chttp%3A%2F%2Fwww.bigdata.com%2Frdf%23%3E%0A%0ASELECT%20%3FartworkLabel%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fartist)%20AS%20%3Fartist)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FbirthDate)%20AS%20%3FbirthDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FdeathDate)%20AS%20%3FdeathDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fnationality)%20AS%20%3Fnationality)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FcompletionDate)%20AS%20%3FcompletionDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FartworkType)%20AS%20%3FartworkType)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fheight)%20AS%20%3Fheight)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Flength)%20AS%20%3Flength)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fmuseum)%20AS%20%3Fmuseum)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fimage)%20AS%20%3Fimage)%0AWHERE%20%7B%0A%20%20%3Fartwork%20wdt%3AP31%20wd%3AQ3305213.%20%20%23%20Instance%20of%20artwork%0A%20%20%3Fartwork%20wdt%3AP170%20%3Fartist.%20%20%20%20%20%20%23%20Creator%20(artist)%0A%20%20%3Fartwork%20wdt%3AP18%20%3Fimage.%20%20%20%20%20%20%20%20%23%20Image%0A%20%20%0A%20%20%23%20Artist%20information%0A%20%20%3Fartist%20wdt%3AP569%20%3FbirthDate.%20%20%20%20%20%23%20Date%20of%20birth%0A%20%20OPTIONAL%20%7B%20%3Fartist%20wdt%3AP570%20%3FdeathDate.%20%7D%20%20%20%20%20%20%20%20%20%23%20Date%20of%20death%0A%20%20%3Fartist%20wdt%3AP27%20%3Fnationality.%20%20%20%20%20%20%20%20%23%20Nationality%0A%20%20%0A%20%20%23%20Artwork%20information%0A%20%20%3Fartwork%20wdt%3AP585%20%3FcompletionDate.%20%20%23%20Date%20completed%0A%20%20%3Fartwork%20wdt%3AP31%20%3FartworkType.%20%20%20%20%20%20%20%23%20Artwork%20type%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP2048%20%3Fheight.%20%7D%20%20%20%20%20%20%20%20%20%20%20%23%20Height%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP2049%20%3Flength.%20%7D%20%20%20%20%20%20%20%20%20%20%20%23%20Length%0A%20%20%0A%20%20%23%20Museum%20or%20gallery%20information%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP195%20%3Fmuseum.%20%7D%20%20%20%20%20%20%20%20%20%20%20%23%20Museum%20or%20gallery%0A%20%20%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%7D%0AGROUP%20BY%20%3Fartwork%20%3FartworkLabel%0ALIMIT%20100" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+    <div class="page-wrap" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h1 class="page-title" id="page-title">Ontology Graphs</h1>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <button id="left-button" class="styled-button">Little Ontology Graph rdf file</button>
+            <button id="middle-button" class="styled-button">Big Ontology Graph rdf file</button>
+            <button id="right-button" class="styled-button">Wikidata Ontology Graph</button>
+        </div>
+        <iframe id="wikidata-iframe" title="Wikidata Query Results" src="https://query.wikidata.org/embed.html#PREFIX%20wdt%3A%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fprop%2Fdirect%2F%3E%0APREFIX%20bd%3A%20%3Chttp%3A%2F%2Fwww.bigdata.com%2Frdf%23%3E%0A%0ASELECT%20%3FartworkLabel%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fartist)%20AS%20%3Fartist)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FbirthDate)%20AS%20%3FbirthDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FdeathDate)%20AS%20%3FdeathDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fnationality)%20AS%20%3Fnationality)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FcompletionDate)%20AS%20%3FcompletionDate)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3FartworkType)%20AS%20%3FartworkType)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fheight)%20AS%20%3Fheight)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Flength)%20AS%20%3Flength)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fmuseum)%20AS%20%3Fmuseum)%20%0A%20%20%20%20%20%20%20(SAMPLE(%3Fimage)%20AS%20%3Fimage)%0AWHERE%20%7B%0A%20%20%3Fartwork%20wdt%3AP31%20wd%3AQ3305213.%20%20%23%20Instance%20of%20artwork%0A%20%20%3Fartwork%20wdt%3AP170%20%3Fartist.%20%20%20%20%20%20%23%20Creator%20(artist)%0A%20%20%3Fartwork%20wdt%3AP18%20%3Fimage.%20%20%20%20%20%20%20%20%23%20Image%0A%20%20%0A%20%20%23%20Artist%20information%0A%20%20%3Fartist%20wdt%3AP569%20%3FbirthDate.%20%20%20%20%20%23%20Date%20of%20birth%0A%20%20OPTIONAL%20%7B%20%3Fartist%20wdt%3AP570%20%3FdeathDate.%20%7D%20%20%20%20%20%20%20%20%23%20Date%20of%20death%0A%20%20%3Fartist%20wdt%3AP27%20%3Fnationality.%20%20%20%20%20%20%20%20%23%20Nationality%0A%20%20%0A%20%20%23%20Artwork%20information%0A%20%20%3Fartwork%20wdt%3AP585%20%3FcompletionDate.%20%20%23%20Date%20completed%0A%20%20%3Fartwork%20wdt%3AP31%20%3FartworkType.%20%20%20%20%20%20%23%20Artwork%20type%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP2048%20%3Fheight.%20%7D%20%20%20%20%20%20%20%20%20%20%23%20Height%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP2049%20%3Flength.%20%7D%20%20%20%20%20%20%20%20%20%20%23%20Length%0A%20%20%0A%20%20%23%20Museum%20or%20gallery%20information%0A%20%20OPTIONAL%20%7B%20%3Fartwork%20wdt%3AP195%20%3Fmuseum.%20%7D%20%20%20%20%20%23%20Museum%20or%20gallery%0A%20%20%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%7D%0AGROUP%20BY%20%3Fartwork%20%3FartworkLabel%0ALIMIT%20100" referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups" style="display: none;"></iframe>
+        <div id="ontology-graph" style="display: none;"></div>
     </div>
 
     <footer class="site-footer">
         <div class="footer-buttons">
-            <a href="../../">Text1</a>
-            <a href="../../">Text2</a>
-            <a href="../../">Text3</a>
-            <a href="../../">Text4</a>
+            <a href="../index.html">Home</a>
+            <a>Ontology Graphs</a>
+            <a href="../Explore/explore.html">Research</a>
         </div>
 
         <!-- For the design -->
@@ -62,6 +71,189 @@
 
 
     <script defer="defer" src="../Ressources/Nav_Bar/Nav_Bar.js"></script>
+    <script defer="defer" src="../user_session.js"></script>
+    <script>
+        function showMenu() {
+            document.getElementById('left-button').style.display = 'block';
+            document.getElementById('middle-button').style.display = 'block';
+            document.getElementById('right-button').style.display = 'block';
+            document.getElementById('wikidata-iframe').style.display = 'none';
+            document.getElementById('ontology-graph').style.display = 'none';
+            document.getElementById('back-button-container').style.display = 'none';
+            document.getElementById('page-title').style.display = 'block';
+        }
+
+        document.getElementById('right-button').addEventListener('click', function() {
+            document.getElementById('left-button').style.display = 'none';
+            document.getElementById('middle-button').style.display = 'none';
+            document.getElementById('right-button').style.display = 'none';
+            document.getElementById('wikidata-iframe').style.display = 'block';
+            document.getElementById('back-button-container').style.display = 'block';
+            document.getElementById('page-title').style.display = 'none';
+        });
+
+        document.getElementById('left-button').addEventListener('click', function() {
+            document.getElementById('left-button').style.display = 'none';
+            document.getElementById('middle-button').style.display = 'none';
+            document.getElementById('right-button').style.display = 'none';
+            document.getElementById('ontology-graph').style.display = 'block';
+            document.getElementById('back-button-container').style.display = 'block';
+            document.getElementById('page-title').style.display = 'none';
+            loadOntologyGraph(10);
+        });
+
+        document.getElementById('middle-button').addEventListener('click', function() {
+            document.getElementById('left-button').style.display = 'none';
+            document.getElementById('middle-button').style.display = 'none';
+            document.getElementById('right-button').style.display = 'none';
+            document.getElementById('ontology-graph').style.display = 'block';
+            document.getElementById('back-button-container').style.display = 'block';
+            document.getElementById('page-title').style.display = 'none';
+            loadOntologyGraph(1000);
+        });
+
+        function loadOntologyGraph(limit) {
+            // Fetch and parse the RDF data
+            fetch('2nd_art_gallery.rdf')
+                .then(response => response.text())
+                .then(data => {
+                    // Parse the RDF data and create the graph
+                    const parser = new DOMParser();
+                    const rdfDoc = parser.parseFromString(data, 'application/xml');
+                    const descriptions = Array.from(rdfDoc.getElementsByTagName('rdf:Description')).slice(0, limit);
+                    const graphContainer = document.getElementById('ontology-graph');
+
+                    // Clear any existing content
+                    graphContainer.innerHTML = '';
+
+                    // Create a simple representation of the RDF data
+                    const nodes = [];
+                    const links = [];
+                    const nodeMap = new Map();
+
+                    for (let i = 0; i < descriptions.length; i++) {
+                        const description = descriptions[i];
+                        const nodeID = description.getAttribute('rdf:nodeID');
+                        const node = { id: nodeID, label: nodeID, linkCount: 0 };
+                        nodes.push(node);
+                        nodeMap.set(nodeID, node);
+
+                        const children = description.children;
+                        for (let j = 0; j < children.length; j++) {
+                            const child = children[j];
+                            const childID = child.getAttribute('rdf:nodeID') || child.textContent;
+                            if (childID && childID !== '2024-11-20T16:27:54' && childID !== '2024-11-20T16:27:55') {
+                                links.push({ source: nodeID, target: childID });
+                                if (!nodeMap.has(childID)) {
+                                    const childNode = { id: childID, label: childID, linkCount: 0 };
+                                    nodes.push(childNode);
+                                    nodeMap.set(childID, childNode);
+                                }
+                            }
+                        }
+                    }
+
+                    // Filter out links with missing nodes and count links
+                    const validLinks = links.filter(link => {
+                        if (nodeMap.has(link.source) && nodeMap.has(link.target)) {
+                            nodeMap.get(link.source).linkCount++;
+                            nodeMap.get(link.target).linkCount++;
+                            return true;
+                        }
+                        return false;
+                    });
+
+                    // Create the graph using D3.js
+                    const width = 1400;
+                    const height = 700;
+                    const svg = d3.select(graphContainer)
+                        .append('svg')
+                        .attr('width', width)
+                        .attr('height', height)
+                        .call(d3.zoom().on('zoom', (event) => {
+                            svg.attr('transform', event.transform);
+                        }))
+                        .append('g');
+
+                    const simulation = d3.forceSimulation(nodes)
+                        .force('link', d3.forceLink(validLinks).id(d => d.id))
+                        .force('charge', d3.forceManyBody().strength(-200))
+                        .force('center', d3.forceCenter(width / 2, height / 2));
+
+                    const link = svg.append('g')
+                        .attr('class', 'links')
+                        .selectAll('line')
+                        .data(validLinks)
+                        .enter().append('line')
+                        .attr('stroke-width', 1.5)
+                        .attr('stroke', 'black');
+
+                    const node = svg.append('g')
+                        .attr('class', 'nodes')
+                        .selectAll('circle')
+                        .data(nodes)
+                        .enter().append('circle')
+                        .attr('r', 5)
+                        .attr('fill', d => {
+                            if (d.linkCount === 1) return 'blue';
+                            if (d.linkCount === 2) return 'green';
+                            if (d.linkCount >= 3 && d.linkCount <= 4) return 'orange';
+                            if (d.linkCount > 4) return 'red';
+                            return 'gray';
+                        })
+                        .call(d3.drag()
+                            .on('start', dragstarted)
+                            .on('drag', dragged)
+                            .on('end', dragended));
+
+                    node.append('title')
+                        .text(d => d.id);
+
+                    const text = svg.append('g')
+                        .attr('class', 'labels')
+                        .selectAll('text')
+                        .data(nodes)
+                        .enter().append('text')
+                        .attr('dy', -10)
+                        .attr('text-anchor', 'middle')
+                        .text(d => d.id);
+
+                    simulation.on('tick', () => {
+                        link
+                            .attr('x1', d => d.source.x)
+                            .attr('y1', d => d.source.y)
+                            .attr('x2', d => d.target.x)
+                            .attr('y2', d => d.target.y);
+
+                        node
+                            .attr('cx', d => d.x)
+                            .attr('cy', d => d.y);
+
+                        text
+                            .attr('x', d => d.x)
+                            .attr('y', d => d.y);
+                    });
+
+                    function dragstarted(event, d) {
+                        if (!event.active) simulation.alphaTarget(0.3).restart();
+                        d.fx = d.x;
+                        d.fy = d.y;
+                    }
+
+                    function dragged(event, d) {
+                        d.fx = event.x;
+                        d.fy = event.y;
+                    }
+
+                    function dragended(event, d) {
+                        if (!event.active) simulation.alphaTarget(0);
+                        d.fx = d.x;
+                        d.fy = d.y;
+                    }
+                })
+                .catch(error => console.error('Error loading RDF data:', error));
+        }
+    </script>
 </body>
 
 </html>

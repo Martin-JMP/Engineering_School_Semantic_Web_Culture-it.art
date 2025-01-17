@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", function() {
             if (currentPage === "Profile.html") {
                 // Si on est sur la page du profil, afficher le prénom sans lien cliquable
                 userSection.innerHTML = `<a class="nav-link" data-name="profile">${data.pseudonyme}</a>`;
+            } else if (currentPage === "index.html") {
+                // Si on est sur la page d'accueil, afficher le prénom avec le lien cliquable vers le profil
+                userSection.innerHTML = `<a href="./User/Profile/Profile.html" class="nav-link" data-name="profile">${data.pseudonyme}</a>`;
             } else {
                 // Pour les autres pages, afficher le prénom avec le lien cliquable vers le profil
                 userSection.innerHTML = `<a href="../User/Profile/Profile.html" class="nav-link" data-name="profile">${data.pseudonyme}</a>`;

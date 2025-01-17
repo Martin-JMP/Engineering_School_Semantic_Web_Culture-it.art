@@ -8,32 +8,43 @@ if (!isset($_SESSION['pseudonyme'])) {
     exit;
 }
 
-
-// Database connection
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    echo json_encode(['error' => "Connection failed: " . $conn->connect_error]);
-    exit;
-}
+// SPARQL endpoint
+$sparqlEndpoint = "http://localhost:3030/Test-artworks8OBJECT-USERS/query";
 
 $pseudonyme = $_SESSION['pseudonyme'];
-$query = $conn->prepare("SELECT Artist FROM users WHERE pseudonyme = ?");
-$query->bind_param("s", $pseudonyme);
-$query->execute();
-$query->bind_result($isArtist);
-$query->fetch();
-$query->close();
-$conn->close();
 
-if ($isArtist) {
-    echo json_encode(['logged_in' => true, 'is_artist' => true]);
-} else {
-    echo json_encode(['logged_in' => true, 'is_artist' => false]);
+try {
+    // Prepare the SPARQL query to check if the user is an artist
+    $sparqlQuery = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    SELECT ?artist
+    WHERE {
+        ?user rdf:type ag:User ;
+              ag:pseudonyme \"$pseudonyme\" ;
+              ag:Artist ?artist .
+    }";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $sparqlEndpoint);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('query' => $sparqlQuery)));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+
+    if (empty($data['results']['bindings'])) {
+        echo json_encode(['logged_in' => true, 'is_artist' => false]);
+    } else {
+        $isArtist = $data['results']['bindings'][0]['artist']['value'] == "1";
+        echo json_encode(['logged_in' => true, 'is_artist' => $isArtist]);
+    }
+
+} catch (Exception $e) {
+    echo json_encode(['error' => $e->getMessage()]);
 }
 ?>

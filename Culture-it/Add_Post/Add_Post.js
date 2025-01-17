@@ -92,20 +92,101 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(`${key}: ${value}`);
         }
 
-        fetch('insert_data.php', {
+        // Validate form data
+        const requiredFields = [
+            'artwork-title',
+            'artwork-end-date',
+            'artwork-medium',
+            'artwork-culture',
+            'artwork-dimensions',
+            'artwork-country',
+            'artwork-description',
+            'exact-file-name'
+        ];
+
+        for (const field of requiredFields) {
+            if (!formData.get(field)) {
+                alert(`Missing required data: ${field}`);
+                return;
+            }
+        }
+
+        // Define the object_id variable
+        const object_id = 9999999;
+
+        // Retrieve the last registered ID
+        const sparqlQueryMaxId = `
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX ag: <http://example.org/artgallery/>
+        SELECT (MAX(?id) AS ?maxId)
+        WHERE {
+            ?artwork rdf:type ag:Artwork ;
+                     ag:id ?id .
+        }`;
+
+        fetch('http://localhost:3030/Test-artworks8OBJECT-USERS/query', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({ query: sparqlQueryMaxId })
         })
         .then(response => response.json())
-        .then(data => {
-            console.log(data);  // Print the json_encode response in the console
-            if (data.success) {
-                alert('Data inserted successfully');
-            } else {
-                console.error('Error inserting data:', data.error);
+        .then(dataMaxId => {
+            let newId = 1;
+            if (dataMaxId.results.bindings.length > 0) {
+                newId = parseInt(dataMaxId.results.bindings[0].maxId.value) + 1;
             }
+
+            // Retrieve the artist display name from the session
+            fetch('check_session.php')
+                .then(response => response.json())
+                .then(sessionData => {
+                    const artist_display_name = sessionData.pseudonyme ?? null;  // Retrieve artist display name from session
+
+                    // SPARQL query to insert the artwork data
+                    const sparqlQuery = `
+                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX ag: <http://example.org/artgallery/>
+                    INSERT DATA {
+                      _:artwork rdf:type ag:Artwork ;
+                                ag:id "${newId}"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                ag:object_id ${object_id} ;
+                                ag:title "${formData.get('artwork-title')}" ;
+                                ag:object_end_date "${formData.get('artwork-end-date')}" ;
+                                ag:medium "${formData.get('artwork-medium')}" ;
+                                ag:culture "${formData.get('artwork-culture')}" ;
+                                ag:dimensions "${formData.get('artwork-dimensions')}" ;
+                                ag:country "${formData.get('artwork-country')}" ;
+                                ag:description "${formData.get('artwork-description')}" ;
+                                ag:file "${formData.get('exact-file-name')}" ;
+                                ag:artist_display_name "${artist_display_name}" .
+                    }`;
+
+                    // Send the query to the SPARQL endpoint
+                    fetch('http://localhost:3030/Test-artworks8OBJECT-USERS/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({ update: sparqlQuery })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);  // Print the json_encode response in the console
+                        if (data.success) {
+                            alert('Data inserted successfully');
+                        } else {
+                            console.error('Error inserting data:', data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error inserting data:', error));
+                })
+                .catch(error => console.error('Error retrieving session data:', error));
         })
-        .catch(error => console.error('Error inserting data:', error));
+        .catch(error => console.error('Error retrieving max ID:', error));
     });
 
     function isImageFile(file) {

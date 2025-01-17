@@ -7,85 +7,89 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Connexion à la base de données
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+header('Content-Type: application/json');
 
-// Essayez de se connecter à la base de données
+// SPARQL endpoint
+$sparqlEndpoint = "http://localhost:3030/Test-artworks8OBJECT-USERS/query";
+
+// Récupérer les informations de l'utilisateur connecté
+$user_id = $_SESSION['user_id'];
+
 try {
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Préparer la requête SPARQL pour récupérer les informations de l'utilisateur
+    $sparqlQueryUser = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    SELECT ?pseudonyme ?email ?birth ?created_at ?artist
+    WHERE {
+        ?user rdf:type ag:User ;
+              ag:id \"$user_id\"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+              ag:pseudonyme ?pseudonyme ;
+              ag:email ?email ;
+              ag:birth ?birth ;
+              ag:created_at ?created_at ;
+              ag:Artist ?artist .
+    }";
 
-    // Vérifiez la connexion
-    if ($conn->connect_error) {
-        throw new Exception("Connection failed: " . $conn->connect_error);
-    }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $sparqlEndpoint);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('query' => $sparqlQueryUser)));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $responseUser = curl_exec($ch);
+    $dataUser = json_decode($responseUser, true);
 
-    // Endpoint to handle artwork deletion
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_artwork'])) {
-        $artwork_id = $_POST['artwork_id'];
-        $image_url = $_POST['image_url'];
-
-        // Delete artwork from database
-        $sqlDelete = "DELETE FROM artworks WHERE id = ?";
-        $stmtDelete = $conn->prepare($sqlDelete);
-        $stmtDelete->bind_param("i", $artwork_id);
-        $stmtDelete->execute();
-
-        // Delete image file from server
-        $filePath = '../../Upload/' . basename($image_url);
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
-
-        echo json_encode(['success' => true]);
+    if (empty($dataUser['results']['bindings'])) {
+        echo json_encode(['error' => 'User not found']);
         exit;
     }
 
-    // Récupérer les informations de l'utilisateur connecté
-    $user_id = $_SESSION['user_id'];
-    
-    // Requête pour récupérer les informations utilisateur
-    $sql = "SELECT pseudonyme, email, birth, created_at FROM users WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $user = $dataUser['results']['bindings'][0];
+    $isArtist = $user['artist']['value'] == "1";
 
-    // Vérifier si l'utilisateur existe
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    // Préparer la requête SPARQL pour récupérer les œuvres d'art de l'utilisateur
+    $sparqlQueryArtworks = "
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ag: <http://example.org/artgallery/>
+    SELECT ?id ?title ?file ?object_id
+    WHERE {
+        ?artwork rdf:type ag:Artwork ;
+                 ag:artist_display_name \"{$user['pseudonyme']['value']}\" ;
+                 ag:id ?id ;
+                 ag:object_id ?object_id ;
+                 ag:title ?title ;
+                 ag:file ?file .
+    }";
 
-        // Requête pour récupérer les œuvres d'art de l'utilisateur
-        $sqlArtworks = "SELECT id, title, file AS image_url FROM artworks WHERE artist_display_name = ?";
-        $stmtArtworks = $conn->prepare($sqlArtworks);
-        $stmtArtworks->bind_param("s", $user['pseudonyme']);
-        $stmtArtworks->execute();
-        $resultArtworks = $stmtArtworks->get_result();
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('query' => $sparqlQueryArtworks)));
+    $responseArtworks = curl_exec($ch);
+    curl_close($ch);
 
-        $artworks = [];
-        while ($artwork = $resultArtworks->fetch_assoc()) {
-            $artworks[] = $artwork;
-        }
+    $dataArtworks = json_decode($responseArtworks, true);
+    $artworks = [];
 
-        // Retourner les informations utilisateur et souscription au format JSON
-        echo json_encode([
-            'pseudonyme' => $user['pseudonyme'],
-            'email' => $user['email'],
-            'birth' => $user['birth'],
-            'created_at' => $user['created_at'],
-            'artworks' => $artworks
-        ]);
-
-    } else {
-        echo json_encode(['error' => 'User not found']);
+    foreach ($dataArtworks['results']['bindings'] as $artwork) {
+        $artworks[] = [
+            'id' => $artwork['id']['value'],
+            'object_id' => $artwork['object_id']['value'],
+            'title' => $artwork['title']['value'],
+            'image_url' => $artwork['file']['value']
+        ];
     }
 
-    // Fermer les requêtes et la connexion
-    $stmt->close();
-    $stmtArtworks->close();
-    $conn->close();
+    // Retourner les informations utilisateur et œuvres d'art au format JSON
+    echo json_encode([
+        'pseudonyme' => $user['pseudonyme']['value'],
+        'email' => $user['email']['value'],
+        'birth' => $user['birth']['value'],
+        'created_at' => $user['created_at']['value'],
+        'is_artist' => $isArtist,
+        'artworks' => $artworks
+    ]);
+
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }

@@ -12,44 +12,53 @@ function fetchUserProfile() {
                 const birthElement = document.getElementById('birth');
                 const createdAtElement = document.getElementById('created_at');
                 const artworksContainer = document.getElementById('artworks_container');
+                const artworksMainSection = document.getElementById('artworks_main_section');
 
                 // Vérifier si les éléments existent dans le DOM
-                if (pseudonymeElement && emailElement && createdAtElement && artworksContainer) {
+                if (pseudonymeElement && emailElement && createdAtElement && artworksContainer && artworksMainSection) {
                     // Affichage des informations utilisateur
                     pseudonymeElement.textContent = data.pseudonyme;
                     emailElement.textContent = data.email;
                     birthElement.textContent = data.birth;
                     createdAtElement.textContent = data.created_at;
 
-                    // Affichage des œuvres d'art de l'utilisateur avec bouton de suppression
-                    if (data.artworks.length > 0) {
-                        document.querySelector('.artworks-title').classList.remove('hidden');
-                        data.artworks.forEach(artwork => {
-                            const artworkElement = document.createElement('div');
-                            artworkElement.classList.add('artwork');
-                            artworkElement.id = `artwork_${artwork.id}`;
+                    // Afficher ou cacher la section des œuvres d'art en fonction du statut d'artiste
+                    if (data.is_artist) {
+                        artworksMainSection.classList.remove('hidden');
+                        // Affichage des œuvres d'art de l'utilisateur avec bouton de suppression
+                        if (data.artworks.length > 0) {
+                            document.querySelector('.artworks-title').classList.remove('hidden');
+                            data.artworks.forEach(artwork => {
+                                const artworkElement = document.createElement('div');
+                                artworkElement.classList.add('artwork');
+                                artworkElement.id = `artwork_${artwork.id}`;
 
-                            const deleteButton = document.createElement('button');
-                            deleteButton.textContent = '✖';
-                            deleteButton.classList.add('delete-button');
-                            deleteButton.onclick = () => deleteArtwork(artwork.id, artwork.image_url);
+                                const deleteButton = document.createElement('button');
+                                deleteButton.textContent = '✖';
+                                deleteButton.classList.add('delete-button');
+                                deleteButton.onclick = () => deleteArtwork(artwork.id, artwork.image_url);
 
-                            const artworkTitle = document.createElement('h4');
-                            artworkTitle.textContent = artwork.title;
+                                const artworkTitle = document.createElement('h4');
+                                artworkTitle.textContent = artwork.title;
 
-                            const artworkImage = document.createElement('img');
-                            artworkImage.src = `../../Upload/${artwork.image_url}`;
-                            artworkImage.alt = artwork.title;
+                                const artworkImage = document.createElement('img');
+                                artworkImage.src = `../../Upload/${artwork.image_url}`;
+                                artworkImage.alt = artwork.title;
+                                artworkImage.onclick = () => {
+                                    window.location.href = `../../Post/Post.html?ObjectId=${artwork.object_id}&id=${artwork.id}`;
+                                };
 
-                            artworkElement.appendChild(deleteButton);
-                            artworkElement.appendChild(artworkTitle);
-                            artworkElement.appendChild(artworkImage);
-                            artworksContainer.appendChild(artworkElement);
-                        });
+                                artworkElement.appendChild(deleteButton);
+                                artworkElement.appendChild(artworkTitle);
+                                artworkElement.appendChild(artworkImage);
+                                artworksContainer.appendChild(artworkElement);
+                            });
+                        } else {
+                            document.querySelector('.artworks-title').classList.add('hidden');
+                        }
                     } else {
-                        document.querySelector('.artworks-title').classList.add('hidden');
+                        artworksMainSection.classList.add('hidden');
                     }
-
                 } else {
                     console.error('Required DOM elements are missing.');
                 }
@@ -60,13 +69,12 @@ function fetchUserProfile() {
 
 // Fonction pour supprimer une œuvre d'art
 function deleteArtwork(artworkId, imageUrl) {
-    fetch('Profile.php', {
+    fetch('DeleteArtwork.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
-        body: new URLSearchParams({
-            delete_artwork: true,
+        body: JSON.stringify({
             artwork_id: artworkId,
             image_url: imageUrl
         })
