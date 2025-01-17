@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="General Conditions of Usage" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <title>Accept CGU</title>
+    <link href="../Ressources/Nav_Bar/Nav_Bar.css" rel="stylesheet">
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .faq-container {
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            max-width: 800px;
+        }
+
+        .faq-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 20px 30px 20px 0;
+            position: relative;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .faq-question::after {
+            content: '↓';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .faq-question.active::after {
+            content: '↑';
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 0 20px 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .faq-answer.show {
+            display: block;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <!-- Header section -->
+    <div class="navbar">
+        <div class="center-nav">
+            <a href="../index.html" class="nav-link" data-name="Text1">Home</a>
+            <a href="../Ontology/Ontology.html" class="nav-link" data-name="Text2">Ontology Graphs</a>
+            <a href="../Explore/explore.html" class="nav-link" data-name="Text3">Research</a>
+            <a href="../Events/Events.html" class="nav-link" data-name="Text4">Events</a>
+        </div>
+        <div class="right-nav" id="user-section">
+            <a href="../User/Login/L0gin.html" class="nav-link" data-name="login">Login</a>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="page-wrap">
+            <h1>Frequently Asked Questions</h1>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">What is this website for ?</button>
+                <div class="faq-answer">This website is designed to provide an enriched, interconnected digital repository for cultural heritage and historical artifacts, leveraging Semantic Web technologies to make these resources accessible, organized, and easy to explore, fostering a deeper connection with human culture and history.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">How do I search for specific artworks ?</button>
+                <div class="faq-answer">You can use our search function to look up artworks by title, artist name, period, or style.</div>
+        
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">How is the artwork information verified ?</button>
+                <div class="faq-answer">Our team works with art historians, museums, and experts to verify all information. Each entry is thoroughly researched and includes citations to reliable sources.</div>
+        
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">How often is the database updated?</button>
+                <div class="faq-answer">Our database is updated continuously as new information becomes available or when verified corrections are submitted by our community.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer section -->
+    <footer class="site-footer">
+        <div class="footer-buttons">
+            <a href="../index.html">Home</a>
+            <a href="../Ontology/Ontology.html">Ontology Graphs</a>
+            <a href="../Explore/explore.html">Research</a>
+            <a href="../CGU/GCU.html">CGU</a>
+            <a href="../FAQ/FAQ.html">FAQ</a>
+        </div>
+
+        <!-- For the design -->
+        <div class="bubble1"></div>
+        <div class="bubble2"></div>
+        <div class="bubble3"></div>
+        <div class="bubble4"></div>
+        <div class="bubble5"></div>
+        <div class="bubble6"></div>
+        <div class="bubble7"></div>
+        <div class="bubble8"></div>
+        <div class="bubble9"></div>
+        <div class="bubble10"></div>
+        <div class="bubble11"></div>
+        <div class="bubble12"></div>
+        <div class="bubble13"></div>
+        <div class="bubble14"></div>
+        <div class="bubble15"></div>
+        <div class="bubble16"></div>
+        <div class="bubble17"></div>
+        <div class="bubble18"></div>
+        <div class="bubble19"></div>
+        <div class="bubble20"></div>
+        <div class="bubble21"></div>
+    </footer>
+
+    <script defer="defer" src="../Ressources/Nav_Bar/Nav_Bar.js"></script>
+    <script defer="defer" src="../user_session.js"></script>
+    <script>
+       const questions = document.querySelectorAll('.faq-question');
+        
+        questions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isOpen = answer.classList.contains('show');
+                
+                // Close all answers
+                document.querySelectorAll('.faq-answer').forEach(a => {
+                    a.classList.remove('show');
+                });
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                });
+                
+                // Open clicked answer if it wasn't open
+                if (!isOpen) {
+                    answer.classList.add('show');
+                    question.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
