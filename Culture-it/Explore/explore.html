@@ -26,7 +26,7 @@
 
     <main>
             <section class="hero-background responsive-background-image">
-            <h1>Discover Europe's digital cultural heritage</h1>
+            <h1>Discover digital cultural heritage</h1>
             <p class="subtitle">Search, save and share art<br>from thousands of cultural institutions</p>                
                 <div class="hero-content">
                     <form id="search-form">
@@ -37,7 +37,6 @@
                                     <span class="input-border input-border-alt"></span>
                                 </div> 
                             </div>
-                            <button id="search-btn">Search</button>  
                         </div>
                     </form>
                     <div id="search-results" class="search-results"></div>
@@ -56,7 +55,7 @@
                             </div>
                         </div>
                         <div class="theme-card">
-                            <img src="./picture/forweb3.jpg"" alt="Photography" class="card-image">
+                            <img src="./picture/forweb3.jpg" alt="Photography" class="card-image">
                             <div class="card-overlay">
                                 <div class="card-tag">Photography</div>
                                 <p class="card-description">View historical photographs and photography collections.</p>
@@ -118,6 +117,81 @@
 
     <script defer="defer" src="../Ressources/Nav_Bar/Nav_Bar.js"></script>
     <script defer="defer" src="../user_session.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+
+        searchInput.addEventListener("input", async () => {
+            const query = searchInput.value.trim();
+            if (query.length === 0) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            const sparqlEndpoint = "http://localhost:3030/Test-artworks8OBJECT-USERS/query";
+            const sparqlQuery = `
+            PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            PREFIX ag: <http://example.org/artgallery/>
+            SELECT ?objectId ?id ?title ?medium ?dimensions ?artistDisplayName ?country ?culture ?object_end_date ?comment WHERE {
+                ?artwork rdf:type ag:Artwork ;
+                         ag:title ?title ;
+                         ag:object_id ?objectId ;
+                         OPTIONAL { ?artwork ag:id ?id }
+                         OPTIONAL { ?artwork ag:medium ?medium }
+                         OPTIONAL { ?artwork ag:dimensions ?dimensions }
+                         OPTIONAL { ?artwork ag:artist_display_name ?artistDisplayName }
+                         OPTIONAL { ?artwork ag:country ?country }
+                         OPTIONAL { ?artwork ag:culture ?culture }
+                         OPTIONAL { ?artwork ag:object_end_date ?object_end_date }
+                         OPTIONAL { ?commentNode ag:object_id ?objectId ; ag:comment ?comment }
+                FILTER(
+                    CONTAINS(LCASE(?title), LCASE("${query}")) ||
+                    CONTAINS(LCASE(?medium), LCASE("${query}")) ||
+                    CONTAINS(LCASE(?dimensions), LCASE("${query}")) ||
+                    CONTAINS(LCASE(?artistDisplayName), LCASE("${query}")) ||
+                    CONTAINS(LCASE(?country), LCASE("${query}")) ||
+                    CONTAINS(LCASE(?culture), LCASE("${query}")) ||
+                    CONTAINS(LCASE(?object_end_date), LCASE("${query}")) ||
+                    CONTAINS(LCASE(?comment), LCASE("${query}"))
+                )
+            } LIMIT 10`;
+
+            try {
+                const response = await fetch(sparqlEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Accept': 'application/json'
+                    },
+                    body: new URLSearchParams({ query: sparqlQuery })
+                });
+
+                if (!response.ok) throw new Error("Erreur lors de la récupération des données");
+
+                const data = await response.json();
+                const artworks = data.results.bindings;
+
+                searchResults.innerHTML = '';
+                artworks.forEach(artwork => {
+                    const resultItem = document.createElement("div");
+                    resultItem.className = "search-result-item";
+                    resultItem.textContent = `${artwork.title.value}, ${artwork.artistDisplayName ? artwork.artistDisplayName.value : 'Unknown Artist'}`;
+                    resultItem.addEventListener("click", () => {
+                        let url = `../Post/Post.html?ObjectId=${artwork.objectId.value}`;
+                        if (artwork.objectId.value == 9999999 && artwork.id) {
+                            url += `&id=${artwork.id.value}`;
+                        }
+                        window.location.href = url;
+                    });
+                    searchResults.appendChild(resultItem);
+                });
+            } catch (error) {
+                console.error("Erreur:", error);
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>
