@@ -140,7 +140,7 @@ async function fetchUserProfile() {
         if (data.logged_in) {
             return data;
         } else {
-            window.location.href = '../../User/Login/Login.html';
+            window.location.href = '../User/Login/Login.html';
         }
     } catch (error) {
         console.error('Error fetching user profile:', error);
