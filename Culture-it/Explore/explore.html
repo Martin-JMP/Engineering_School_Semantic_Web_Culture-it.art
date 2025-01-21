@@ -173,8 +173,19 @@
                 const data = await response.json();
                 const artworks = data.results.bindings;
 
-                searchResults.innerHTML = '';
+                const uniqueArtworks = [];
+                const titles = new Set();
+
                 artworks.forEach(artwork => {
+                    const title = artwork.title.value;
+                    if (!titles.has(title)) {
+                        titles.add(title);
+                        uniqueArtworks.push(artwork);
+                    }
+                });
+
+                searchResults.innerHTML = '';
+                uniqueArtworks.forEach(artwork => {
                     const resultItem = document.createElement("div");
                     resultItem.className = "search-result-item";
                     resultItem.textContent = `${artwork.title.value}, ${artwork.artistDisplayName ? artwork.artistDisplayName.value : 'Unknown Artist'}`;

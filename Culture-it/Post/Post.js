@@ -66,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     commentText,
                     commentDate,
                     newId,
-                    objectId: ObjectId
+                    objectId: ObjectId,
+                    Id: id,
                 });
 
                 // SPARQL query to insert the comment
@@ -78,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     _:commentNode rdf:type ag:Comment ;
                                   ag:id "${newId}"^^<http://www.w3.org/2001/XMLSchema#integer> ;
                                   ag:object_id "${ObjectId}"^^<http://www.w3.org/2001/XMLSchema#integer> ;
+                                  ag:art_id "${id}"^^<http://www.w3.org/2001/XMLSchema#integer> ;
                                   ag:comment "${commentText}" ;
                                   ag:pseudonyme "${artistDisplayName}" ;
                                   ag:created_at "${commentDate}"^^<http://www.w3.org/2001/XMLSchema#date> ;

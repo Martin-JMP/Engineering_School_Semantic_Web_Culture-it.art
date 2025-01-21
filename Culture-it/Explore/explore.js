@@ -27,7 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        results.slice(0, 5).forEach(result => {
+        const uniqueResults = [];
+        const titles = new Set();
+
+        results.forEach(result => {
+            const title = result.title || result.comment;
+            if (!titles.has(title)) {
+                titles.add(title);
+                uniqueResults.push(result);
+            }
+        });
+
+        uniqueResults.slice(0, 5).forEach(result => {
             const resultItem = document.createElement("div");
             resultItem.className = "search-result-item";
 
