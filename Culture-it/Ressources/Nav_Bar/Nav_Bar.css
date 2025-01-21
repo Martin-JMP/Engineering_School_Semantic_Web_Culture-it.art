@@ -40,6 +40,10 @@ html, body {
     color: black;
     padding: 15px;
     border-bottom: 1px solid #ddd;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .navbar .center-nav {
@@ -48,6 +52,7 @@ html, body {
     flex-grow: 1;
     position: relative;
     z-index: 5;
+    align-items: center;
 }
 
 .navbar a {
@@ -68,7 +73,6 @@ html, body {
     position: absolute;
     right: 0px;
     z-index: 10;
-    top: 15px;
 }
 
 /* Media query for screens less than 450px wide */
