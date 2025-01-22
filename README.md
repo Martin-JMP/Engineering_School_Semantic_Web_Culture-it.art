@@ -2,6 +2,8 @@
 
 This repository contains the source code and documentation for the **Semantic E-Culture Repository**, a platform designed to preserve and enhance the accessibility of cultural heritage using Semantic Web technologies. This project was developed as part of the **II.3521 - Semantic Web and Knowledge Management** course.
 
+[G2 - Final Report.pdf](https://github.com/user-attachments/files/18504045/G2.-.Final.Report.pdf)
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
