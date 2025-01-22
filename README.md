@@ -1,3 +1,115 @@
+# Semantic E-Culture Repository
+
+This repository contains the source code and documentation for the **Semantic E-Culture Repository**, a platform designed to preserve and enhance the accessibility of cultural heritage using Semantic Web technologies. This project was developed as part of the **II.3521 - Semantic Web and Knowledge Management** course.
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [System Architecture](#system-architecture)
+- [Setup Instructions](#setup-instructions)
+- [Ontology Creation](#ontology-creation)
+- [Data Sources](#data-sources)
+- [RDF Conversion and Validation](#rdf-conversion-and-validation)
+- [Website Features](#website-features)
+- [Ethical Considerations](#ethical-considerations)
+- [Project Timeline](#project-timeline)
+- [Contributors](#contributors)
+
+## Introduction
+The Semantic E-Culture Repository is a digital repository that organizes and presents cultural heritage artifacts using Semantic Web technologies. It leverages ontologies, RDF data, and SWRL rules to enable users to explore cultural data intuitively. The platform aims to enhance cultural preservation, accessibility, and user interaction with historical artifacts.
+
+## Features
+- Ontology-driven data organization.
+- Integration with **Wikidata** and **The Met Museum API**.
+- Dynamic user roles: Viewer, Commenter, Artist.
+- RDF data storage and SPARQL querying.
+- Ethical data handling and accessibility.
+
+## System Architecture
+The platform comprises the following components:
+- **Frontend**: Built using HTML, CSS, and JavaScript for user interaction.
+- **Backend**: PHP for server-side processing and database interaction.
+- **Database**: Apache Jena Fuseki for RDF data storage.
+- **Semantic Queries**: SPARQL for retrieving and manipulating RDF data.
+
+## Setup Instructions
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Install dependencies for the backend and frontend.
+3. Set up the Apache Jena Fuseki triplestore database:
+   - Import the generated RDF files.
+   - Configure SPARQL endpoints for querying.
+4. Start the web server and access the platform via `localhost`.
+
+## Ontology Creation
+The ontology defines the structure and relationships of cultural data:
+- **Classes**: Artwork, Author, Culture, Repository, User, Review.
+- **Data Properties**:
+  - Artwork: `hasNameArt`, `hasDescription`, `dimension`, `medium`, etc.
+  - Author: `hasNameAuth`, `birthYear`, `deathYear`.
+- **Object Properties**:
+  - `Artwork - hasAuthor - Author`
+  - `Review - aboutArtwork - Artwork`
+
+The ontology was developed using Protégé and validated with Python's RDFLib and SHACL.
+
+## Data Sources
+Data was extracted and enriched using:
+- **Wikidata Query Service** with SPARQL.
+- **The Met Museum API** for comprehensive artwork details.
+
+After extraction, data preprocessing included handling missing values and standardizing formats. The final dataset contains over 2,400 records.
+
+## RDF Conversion and Validation
+Data was converted to RDF using Python's RDFLib:
+- **Namespaces** were defined and bound for RDF generation.
+- Over 44,000 RDF triplets were created and validated using Protégé, OWL reasoners, and SPARQL queries.
+- Custom SWRL rules were implemented to infer additional knowledge.
+
+## Website Features
+1. **User Roles**:
+   - **Viewer**: Browse artworks without registration.
+   - **Commenter**: Add comments after registration.
+   - **Artist**: Upload and manage artworks (requires admin approval).
+
+2. **Dynamic Pages**:
+   - Explore artworks and view details.
+   - Add comments and engage with the community.
+   - Upload new artworks with metadata.
+
+3. **Advanced Search**:
+   - Query artworks based on attributes like artist, technique, or style.
+
+## Ethical Considerations
+- **Data Privacy**: User data is encrypted and securely stored.
+- **Copyright Compliance**: Data sourced from copyright-free platforms.
+- **Inclusivity**: Designed for accessibility and user engagement.
+- **Community Moderation**: Ensures respectful and constructive interactions.
+
+## Project Timeline
+| Task                       | Scheduled Finish | Real Finish |
+|----------------------------|------------------|-------------|
+| First Group Meeting        | 01/11/2024       | 01/11/2024  |
+| Scope Definition           | 06/11/2024       | 05/11/2024  |
+| Creation of Ontology       | 27/11/2024       | 25/11/2024  |
+| Data Extraction            | 06/12/2024       | 03/12/2024  |
+| RDF Conversion             | 12/12/2024       | 10/12/2024  |
+| Database Setup             | 05/01/2025       | 05/01/2025  |
+| Frontend Development       | 11/01/2025       | 14/01/2025  |
+| Testing and Debugging      | 13/01/2025       | 16/01/2025  |
+| Demonstration              | 22/01/2025       | 22/01/2025  |
+
+## Contributors
+- Martin Joncourt
+- Chao Zhao
+- Valentyna Pronina
+- Abrahán Gautiel Rodriguez
+- Guilhem Frisch
+- Houwei Li
+
+
 https://culture-it.art/
 
 # Culture-it.art
