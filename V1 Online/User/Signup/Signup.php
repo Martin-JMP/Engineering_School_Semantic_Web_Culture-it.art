@@ -1,9 +1,9 @@
 <?php
 // Connexion à la base de données
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+$servername = "NA";
+$username = "NA";
+$password = "NA";
+$dbname = "NA";
 
 // Création de la connexion
 $conn = new mysqli($servername, $username, $password, $dbname);

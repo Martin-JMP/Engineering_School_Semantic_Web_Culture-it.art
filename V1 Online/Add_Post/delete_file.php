@@ -1,6 +1,10 @@
-
 <?php
 header('Content-Type: application/json');
+
+$servername = "NA";
+$username = "NA";
+$password = "NA";
+$dbname = "NA";
 
 $data = json_decode(file_get_contents("php://input"), true);
 $fileName = $data['fileName'] ?? '';

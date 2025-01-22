@@ -5,10 +5,10 @@ error_reporting(E_ALL);  // Enregistrer toutes les erreurs
 header('Content-Type: application/json');
 
 // Paramètres de connexion à la base de données
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+$servername = "NA";
+$username = "NA";
+$password = "NA";
+$dbname = "NA";
 
 // Créer une connexion à la base de données
 $conn = new mysqli($servername, $username, $password, $dbname);

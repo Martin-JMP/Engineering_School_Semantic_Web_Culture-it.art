@@ -1,6 +1,11 @@
 <?php
 session_start();  // Démarre ou reprend la session
 
+$servername = "NA";
+$username = "NA";
+$password = "NA";
+$dbname = "NA";
+
 // Détruire la session
 session_unset();  // Libère toutes les variables de session
 session_destroy();  // Détruit la session

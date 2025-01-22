@@ -8,10 +8,10 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Connexion à la base de données
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+$servername = "NA";
+$username = "NA";
+$password = "NA";
+$dbname = "NA";
 
 // Essayez de se connecter à la base de données
 try {

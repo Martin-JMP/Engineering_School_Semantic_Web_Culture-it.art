@@ -6,10 +6,10 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Database connection parameters
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+$servername = "NA";
+$username = "NA";
+$password = "NA";
+$dbname = "NA";
 
 // Create a connection to the database
 $conn = new mysqli($servername, $username, $password, $dbname);

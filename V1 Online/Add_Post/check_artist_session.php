@@ -10,10 +10,10 @@ if (!isset($_SESSION['pseudonyme'])) {
 
 
 // Database connection
-$servername = "cultubq333.mysql.db";
-$username = "cultubq333";
-$password = "Semantic789";
-$dbname = "cultubq333";
+$servername = "NA";
+$username = "NA";
+$password = "NA";
+$dbname = "NA";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
