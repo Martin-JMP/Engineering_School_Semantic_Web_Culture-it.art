@@ -4,6 +4,8 @@ This repository contains the source code and documentation for the **Semantic E-
 
 [G2 - Final Report.pdf](https://github.com/user-attachments/files/18504045/G2.-.Final.Report.pdf)
 
+[G2 - Final Presentation.pdf](https://github.com/user-attachments/files/18504049/G2.-.Final.Presentation.pdf)
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
