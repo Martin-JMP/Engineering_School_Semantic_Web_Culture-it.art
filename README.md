@@ -101,6 +101,14 @@ Data was converted to RDF using Python's RDFLib:
 | Testing and Debugging      | 13/01/2025       | 16/01/2025  |
 | Demonstration              | 22/01/2025       | 22/01/2025  |
 
+
+## Sources
+- [Wikidata Query Service](https://query.wikidata.org/)
+- [The Metropolitan Museum of Art API](https://metmuseum.github.io/)
+- [Europeana](https://www.europeana.eu/en)
+- [Protégé Documentation](https://protege.stanford.edu/support.php#documentationSupport)
+- [Karma User Guide](https://github.com/usc-isi-i2/Web-Karma/wiki)
+
 ## Contributors
 - Martin Joncourt
 - Chao Zhao
